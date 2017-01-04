@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,9 +96,11 @@ public class Database extends SQLiteOpenHelper {
 
 
     final String DB_discussionCREATE = "CREATE TABLE " + DISCUSSION_TABLE + "(" + 
-            COLUMN_DISCUSSION_NAME + " VARCHAR(50) PRIMARY KEY, "+
-            COLUMN_DISCUSSION_DESCRIPTION + " VARCHAR(200), "+
-            FK_ROOM_DISCUS_ID+ " INTEGER NOT NULL)";
+            COLUMN_DISCUSSION_NAME + " VARCHAR(100) PRIMARY KEY, "+
+            COLUMN_DISCUSSION_DESCRIPTION + " TEXT, "+
+            FK_ROOM_DISCUS_ID+ " VARCHAR(10))";
+
+
 
     
 /*    final String DB_quizCREATE="CREATE TABLE "+ QUIZ_TABLE +" ("
@@ -136,6 +139,7 @@ public class Database extends SQLiteOpenHelper {
 //        db.execSQL(DB_userCREATE);
 //        db.execSQL(DB_roomCREATE);
         db.execSQL(DB_discussionCREATE);
+		Log.d("Database",DB_discussionCREATE);
 //        db.execSQL(DB_quizCREATE);
 //        db.execSQL(DB_roomQuizesCREATE);
 //        db.execSQL(DB_questionCREATE);
@@ -157,20 +161,20 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public long insertDisscussion(String name, String discription, int roomId){
+    public long insertDisscussion(String name, String discription, String roomId){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(COLUMN_DISCUSSION_NAME, name);
 		contentValues.put(COLUMN_DISCUSSION_DESCRIPTION, discription);
 		contentValues.put(FK_ROOM_DISCUS_ID,roomId);
 		return db.insert(DISCUSSION_TABLE, null, contentValues);
-    }
+	}
 
 	public Cursor getDiscussion(String name) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor =  db.rawQuery( "SELECT * FROM " + DISCUSSION_TABLE +" WHERE "+ COLUMN_DISCUSSION_NAME
-			+" = '"+ name +"'", null);
-		return cursor;
+		Log.d("getDiscussion","SELECT * FROM " + DISCUSSION_TABLE +" WHERE " + COLUMN_DISCUSSION_NAME +" = '"+ name +"'");
+		return db.rawQuery( "SELECT * FROM " + DISCUSSION_TABLE +" WHERE "
+				+ COLUMN_DISCUSSION_NAME +" = '"+ name +"'", null);
 	}
 
 	public List<String> getAllDiscussions() {

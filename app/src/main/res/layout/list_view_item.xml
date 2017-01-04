@@ -7,7 +7,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/quiz_discussion_title"
         android:padding="5dp"
         android:textColor="@color/Black"/>
@@ -15,7 +14,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/difficult_comment"
         android:padding="5dp"
         android:layout_marginRight="5dp"

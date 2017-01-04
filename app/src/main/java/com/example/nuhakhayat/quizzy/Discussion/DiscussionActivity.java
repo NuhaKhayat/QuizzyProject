@@ -21,40 +21,29 @@ public class DiscussionActivity extends AppCompatActivity {
 	Database database;
 	TextView titleTV, descriptionTV;
 	ImageView imageView;
-	String title,description;
+	String title, description;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_discussion);
-		Log.d(TAG,"onCreate");
-
-		descriptionTV = (TextView)findViewById(R.id.disDescTextView);
-		titleTV = (TextView)findViewById(R.id.textView);
 
 		database = new Database(getApplicationContext());
-		Cursor cursor = database.getDiscussion(title);
 
-		if(cursor == null){
-			Log.d(TAG,"Cursor null");
-		}
-		if (cursor != null){
-			Log.d(TAG,"Cursor NOT null");
-			Log.d(TAG,cursor.toString());
+		//Set discussion title
+		title = getIntent().getStringExtra("title");
+		titleTV = (TextView)findViewById(R.id.textView);
+		titleTV.setText(title);
+
+
+		//Retrieve discussion data
+		Cursor cursor = database.getDiscussion(title);
+		if (cursor != null && cursor.moveToFirst()){
 			description = cursor.getString(cursor.getColumnIndex(Database.COLUMN_DISCUSSION_DESCRIPTION));
 		}
-		if(cursor != null){
-			Log.d(TAG,"Cursor NOT null");
-		}
 
-		if(cursor.moveToFirst()){
-			Log.d(TAG,"moveToFirst true");
-		}else{
-			Log.d(TAG,"moveToFirst false");
-		}
-
-		title = getIntent().getStringExtra("title");
-		titleTV.setText(title);
+		//Set discussion description
+		descriptionTV = (TextView)findViewById(R.id.disDescTextView);
 		descriptionTV.setText(description);
 
 		imageView = (ImageView)findViewById(R.id.imageViewdis);

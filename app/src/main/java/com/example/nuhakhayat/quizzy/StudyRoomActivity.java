@@ -62,8 +62,9 @@ public class StudyRoomActivity extends AppCompatActivity {
 		addDiscussion.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(StudyRoomActivity.this,AddDiscussionActivity.class);
-				intent.putExtra("RoomID",1);
+				Intent intent = new Intent(StudyRoomActivity.this, AddDiscussionActivity.class);
+				intent.putExtra("RoomID","1");
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				startActivity(intent);
 			}
 		});
