@@ -25,8 +25,7 @@ import java.util.ArrayList;
  * Activity that represents the starting screen of the app
  * Set the menu and menu click listener
  */
-
-//kdfdjkjfkwj
+//test test test test
 public class MainActivity extends AppCompatActivity {
 
 	private String TAG = "MainActivity";
