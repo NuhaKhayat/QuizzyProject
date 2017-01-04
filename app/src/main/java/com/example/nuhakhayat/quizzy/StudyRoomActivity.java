@@ -22,6 +22,7 @@ public class StudyRoomActivity extends AppCompatActivity {
 	ListView quizListView, discussionListView;
 	ImageView addQuiz, addDiscussion;
 	Database database;
+	// who run the world?? girls
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
