@@ -22,7 +22,7 @@ public class StudyRoomActivity extends AppCompatActivity {
 	ListView quizListView, discussionListView;
 	ImageView addQuiz, addDiscussion;
 	Database database;
-	// who run the world?? girls
+	// just fucking push it motherfucker
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
