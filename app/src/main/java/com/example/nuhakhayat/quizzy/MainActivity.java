@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * Set the menu and menu click listener
  */
 
-//test github ***************
+//test github2 ***************
 
 public class MainActivity extends AppCompatActivity {
 
