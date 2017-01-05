@@ -2,7 +2,6 @@ package com.example.nuhakhayat.quizzy.Discussion;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +19,7 @@ import com.example.nuhakhayat.quizzy.Database;
 import com.example.nuhakhayat.quizzy.R;
 import com.example.nuhakhayat.quizzy.StudyRoomActivity;
 
-public class AddDiscussionActivity extends AppCompatActivity {
+public class AddDiscussion extends AppCompatActivity {
 
 	String TAG = "AddDiscussionActivity";
 	EditText discussionTitle, discussionDescription;
@@ -56,7 +55,7 @@ public class AddDiscussionActivity extends AppCompatActivity {
 		Log.d(TAG, RoomID.toString());
 
 		if(title.isEmpty()){
-			Toast.makeText(AddDiscussionActivity.this,"Please Enter a Title",Toast.LENGTH_SHORT)
+			Toast.makeText(AddDiscussion.this,"Please Enter a Title",Toast.LENGTH_SHORT)
 					.show();
 			return;
 		}
@@ -82,7 +81,7 @@ public class AddDiscussionActivity extends AppCompatActivity {
 		public void run() {
 			try {
 				Thread.sleep(3500); // As I am using LENGTH_LONG in Toast
-				startActivity(new Intent(AddDiscussionActivity.this,StudyRoomActivity.class));
+				startActivity(new Intent(AddDiscussion.this,StudyRoomActivity.class));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -91,7 +90,7 @@ public class AddDiscussionActivity extends AppCompatActivity {
 
 	@Override
 	public void onBackPressed() {
-		Intent intent = new Intent(AddDiscussionActivity.this, StudyRoomActivity.class);
+		Intent intent = new Intent(AddDiscussion.this, StudyRoomActivity.class);
 		intent.putExtra("RoomID",getIntent().getStringExtra("RoomID"));
 		startActivity(intent);
 	}
@@ -101,8 +100,8 @@ public class AddDiscussionActivity extends AppCompatActivity {
 		View toastView = inflater.inflate(R.layout.toast_layout,
 				(ViewGroup) findViewById(R.id.toastLayout));
 
-		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-		//		WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+				WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
 		TextView toastMsg = (TextView)toastView.findViewById(R.id.textViewToast);
 		toastMsg.setText(message);
@@ -115,4 +114,3 @@ public class AddDiscussionActivity extends AppCompatActivity {
 		thread.start();
 	}
 }
-

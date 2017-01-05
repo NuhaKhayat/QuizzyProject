@@ -12,6 +12,7 @@
         android:id="@+id/textViewToast"
         android:text="let us see how it will look"
         android:textColor="@color/LightGreen"
+        android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>

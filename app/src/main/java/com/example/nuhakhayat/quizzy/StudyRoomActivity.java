@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.nuhakhayat.quizzy.Discussion.AddDiscussionActivity;
+import com.example.nuhakhayat.quizzy.Discussion.AddDiscussion;
 import com.example.nuhakhayat.quizzy.Discussion.DiscussionListAdapter;
 import com.example.nuhakhayat.quizzy.Discussion.DiscussionListListener;
 
@@ -63,7 +63,7 @@ public class StudyRoomActivity extends AppCompatActivity {
 		addDiscussion.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(StudyRoomActivity.this, AddDiscussionActivity.class);
+				Intent intent = new Intent(StudyRoomActivity.this, AddDiscussion.class);
 				intent.putExtra("RoomID","1");
 				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				startActivity(intent);
