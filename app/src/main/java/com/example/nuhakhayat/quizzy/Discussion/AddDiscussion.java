@@ -19,8 +19,12 @@ import com.example.nuhakhayat.quizzy.Database;
 import com.example.nuhakhayat.quizzy.R;
 import com.example.nuhakhayat.quizzy.StudyRoomActivity;
 
+/*
+ * The class is used to add ne discussion to a study room
+ */
 public class AddDiscussion extends AppCompatActivity {
 
+	//Initialize necessary variables
 	String TAG = "AddDiscussionActivity";
 	EditText discussionTitle, discussionDescription;
 	Button addDiscussionbtn;
@@ -46,26 +50,28 @@ public class AddDiscussion extends AppCompatActivity {
 
 	}
 
+	//This method is used to add new discussion to the database
 	public void addDiscussion(){
+		//Retrieve data entered by user
 		String title = discussionTitle.getText().toString();
 		String description = discussionDescription.getText().toString();
+		//Retrieve study room id from intent
 		String RoomID = getIntent().getStringExtra("RoomID");
-		Log.d(TAG, title.toString());
-		Log.d(TAG, description.toString());
-		Log.d(TAG, RoomID.toString());
 
+		//Check that discussion title is filled
 		if(title.isEmpty()){
 			Toast.makeText(AddDiscussion.this,"Please Enter a Title",Toast.LENGTH_SHORT)
 					.show();
 			return;
 		}
-
+		//Check the discussion dose not already exist
 		Cursor cursor = database.getDiscussion(title);
 		if(cursor != null && cursor.moveToFirst()){
 			Toast.makeText(getApplicationContext(),"Discussion Already Exist",Toast.LENGTH_LONG)
 					.show();
 		}else{
-			long check = database.insertDisscussion(title,description,RoomID); //change 1 with room id
+			//Add to database and check the the addition has been preformed
+			long check = database.insertDisscussion(title,description,RoomID);
 			if(check != -1){
 				showToast("Discussion Added Successfully");
 			}else{
@@ -75,19 +81,6 @@ public class AddDiscussion extends AppCompatActivity {
 		}
 	}
 
-
-	Thread thread = new Thread(){
-		@Override
-		public void run() {
-			try {
-				Thread.sleep(3500); // As I am using LENGTH_LONG in Toast
-				startActivity(new Intent(AddDiscussion.this,StudyRoomActivity.class));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	};
-
 	@Override
 	public void onBackPressed() {
 		Intent intent = new Intent(AddDiscussion.this, StudyRoomActivity.class);
@@ -95,17 +88,22 @@ public class AddDiscussion extends AppCompatActivity {
 		startActivity(intent);
 	}
 
+	//This method is used to show customized toast message
 	public void showToast(String message){
+		//Retrieve and inflate toast layout
 		LayoutInflater inflater = getLayoutInflater();
 		View toastView = inflater.inflate(R.layout.toast_layout,
 				(ViewGroup) findViewById(R.id.toastLayout));
 
+		//Lock screen when toast show, screen untouchable
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
 				WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
+		//Set toast message in layout text view
 		TextView toastMsg = (TextView)toastView.findViewById(R.id.textViewToast);
 		toastMsg.setText(message);
 
+		//Set toast place on screen, duration, view and show
 		Toast toast = new Toast(getApplicationContext());
 		toast.setGravity(Gravity.FILL, 0, 0);
 		toast.setDuration(Toast.LENGTH_LONG);
@@ -113,4 +111,19 @@ public class AddDiscussion extends AppCompatActivity {
 		toast.show();
 		thread.start();
 	}
+
+	//This thread is used to finish activity when toast disappear
+	Thread thread = new Thread(){
+		@Override
+		public void run() {
+			try {
+				//Sleep thread for taost LENGHT_LONG
+				Thread.sleep(3500);
+				startActivity(new Intent(AddDiscussion.this,StudyRoomActivity.class));
+				finish();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	};
 }
