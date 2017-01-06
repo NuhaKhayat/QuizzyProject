@@ -10,6 +10,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.data;
+
 /**
  * Created by henda on 1/3/2017.
  * This class is used to create and query the application database
@@ -43,8 +45,10 @@ public class Database extends SQLiteOpenHelper {
 
     //User Table columns
     public static final String COLUMN_PK_USERNAME = "PK_Username";
+    public static final String COLUMN_FULLNAME = "fullname";
     public static final String COLUMN_EMAIL = "Email";
     public static final String COLUMN_PASSWORD = "Password";
+    public static final String COLUMN_BDATE = "bdate";
     public static final String COLUMN_STARS_NUM = "StarsNum";
 
     //Discussion Table columns
@@ -80,25 +84,26 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_FK_QUIZ_ROOM_ID = "FK_RoomID";
     public static final String COLUMN_FK_ROOM_QUIZ_ID = "FK_RoomQuizID";
 
-   /* // Queries for creating the tables with their columns
-    final String DB_userCREATE="CREATE TABLE "+ USER_TABLE +" ("
-            + COLUMN_PK_USERNAME +" text primary key,"
-            + COLUMN_EMAIL +" text not null,"
-            + COLUMN_PASSWORD +" text not null,"
-            + COLUMN_STARS_NUM +" integer)";
-
+    //Queries for creating the tables with their columns
+    final String DB_userCREATE = "CREATE TABLE " + USER_TABLE + " ("
+            + COLUMN_PK_USERNAME + " text primary key,"
+            + COLUMN_FULLNAME + " text not null,"
+            + COLUMN_EMAIL + " text not null,"
+            + COLUMN_PASSWORD + " text not null,"
+            + COLUMN_STARS_NUM + " integer)";
+/*
     final String DB_roomCREATE="CREATE TABLE "+ STUDY_ROOM_TABLE +" ("
             + COLUMN_PK_ROOM_ID +" integer primary key autoincrement,"
             + COLUMN_COURSE +" text not null)";
 
     final String DB_majorCREATE="CREATE TABLE "+ MAJORS_TABLE +" ("+ COLUMN_FK_ROOM_MAJOR +" integer,"
-            + COLUMN_MAJORS +" text not null)";*/
+            + COLUMN_MAJORS +" text not null)";
 
 
     final String DB_discussionCREATE = "CREATE TABLE " + DISCUSSION_TABLE + "(" + 
             COLUMN_DISCUSSION_NAME + " VARCHAR(100) PRIMARY KEY, "+
             COLUMN_DISCUSSION_DESCRIPTION + " TEXT, "+
-            FK_ROOM_DISCUS_ID+ " VARCHAR(10))";
+            FK_ROOM_DISCUS_ID+ " VARCHAR(10))";///*
 
 
 
@@ -138,8 +143,8 @@ public class Database extends SQLiteOpenHelper {
         // Execute the queries to create the tables
 //        db.execSQL(DB_userCREATE);
 //        db.execSQL(DB_roomCREATE);
-        db.execSQL(DB_discussionCREATE);
-		Log.d("Database",DB_discussionCREATE);
+//        db.execSQL(DB_discussionCREATE);
+//		  Log.d("Database",DB_discussionCREATE);
 //        db.execSQL(DB_quizCREATE);
 //        db.execSQL(DB_roomQuizesCREATE);
 //        db.execSQL(DB_questionCREATE);
@@ -149,44 +154,63 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXIST"+ USER_TABLE);
-        db.execSQL("DROP TABLE IF EXIST"+ STUDY_ROOM_TABLE);
-        db.execSQL("DROP TABLE IF EXIST"+ DISCUSSION_TABLE);
-        db.execSQL("DROP TABLE IF EXIST"+ QUIZ_TABLE);
-        db.execSQL("DROP TABLE IF EXIST"+ STUDY_ROOM_QUIZ_TABLE);
-        db.execSQL("DROP TABLE IF EXIST"+ QUESTION_TABLE);
-        db.execSQL("DROP TABLE IF EXIST"+ COMMENTS_TABLE);
-        db.execSQL("DROP TABLE IF EXIST"+ MAJORS_TABLE);
+        db.execSQL("DROP TABLE IF EXIST" + USER_TABLE);
+        db.execSQL("DROP TABLE IF EXIST" + STUDY_ROOM_TABLE);
+        db.execSQL("DROP TABLE IF EXIST" + DISCUSSION_TABLE);
+        db.execSQL("DROP TABLE IF EXIST" + QUIZ_TABLE);
+        db.execSQL("DROP TABLE IF EXIST" + STUDY_ROOM_QUIZ_TABLE);
+        db.execSQL("DROP TABLE IF EXIST" + QUESTION_TABLE);
+        db.execSQL("DROP TABLE IF EXIST" + COMMENTS_TABLE);
+        db.execSQL("DROP TABLE IF EXIST" + MAJORS_TABLE);
         onCreate(db);
     }
 
 
-    public long insertDisscussion(String name, String discription, String roomId){
-		SQLiteDatabase db = this.getWritableDatabase();
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(COLUMN_DISCUSSION_NAME, name);
-		contentValues.put(COLUMN_DISCUSSION_DESCRIPTION, discription);
-		contentValues.put(FK_ROOM_DISCUS_ID,roomId);
-		return db.insert(DISCUSSION_TABLE, null, contentValues);
-	}
+    public long insertDisscussion(String name, String discription, String roomId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_DISCUSSION_NAME, name);
+        contentValues.put(COLUMN_DISCUSSION_DESCRIPTION, discription);
+        contentValues.put(FK_ROOM_DISCUS_ID, roomId);
+        return db.insert(DISCUSSION_TABLE, null, contentValues);
+    }
 
-	public Cursor getDiscussion(String name) {
-		SQLiteDatabase db = this.getReadableDatabase();
-		Log.d("getDiscussion","SELECT * FROM " + DISCUSSION_TABLE +" WHERE " + COLUMN_DISCUSSION_NAME +" = '"+ name +"'");
-		return db.rawQuery( "SELECT * FROM " + DISCUSSION_TABLE +" WHERE "
-				+ COLUMN_DISCUSSION_NAME +" = '"+ name +"'", null);
-	}
+    public Cursor getDiscussion(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Log.d("getDiscussion", "SELECT * FROM " + DISCUSSION_TABLE + " WHERE " + COLUMN_DISCUSSION_NAME + " = '" + name + "'");
+        return db.rawQuery("SELECT * FROM " + DISCUSSION_TABLE + " WHERE "
+                + COLUMN_DISCUSSION_NAME + " = '" + name + "'", null);
+    }
 
-	public List<String> getAllDiscussions() {
-		List<String> discussion = new ArrayList<>();
-		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor =  db.rawQuery( "SELECT * FROM " + DISCUSSION_TABLE, null );
-		cursor.moveToFirst();
-		while(cursor.isAfterLast() == false){
-			discussion.add(cursor.getString(cursor.getColumnIndex(COLUMN_DISCUSSION_NAME)));
-			cursor.moveToNext();
-			}
-		return discussion;
-	}
+    public List<String> getAllDiscussions() {
+        List<String> discussion = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DISCUSSION_TABLE, null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            discussion.add(cursor.getString(cursor.getColumnIndex(COLUMN_DISCUSSION_NAME)));
+            cursor.moveToNext();
+        }
+        return discussion;
+    }
+
+    public void updateProfile(int id, String fullname, String email, String bdate) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_FULLNAME, fullname);
+        cv.put(COLUMN_EMAIL, email);
+        cv.put(COLUMN_BDATE, bdate);
+        db.update(USER_TABLE, cv,COLUMN_PK_USERNAME+id, null);
+
+    }
+    public void changePass (int id , String password ){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_PASSWORD,password);
+        db.update(USER_TABLE, cv,COLUMN_PK_USERNAME+id, null);
+    }
+
 
 }
+
+
