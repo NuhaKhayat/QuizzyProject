@@ -20,7 +20,7 @@ import com.example.nuhakhayat.quizzy.R;
 import com.example.nuhakhayat.quizzy.StudyRoomActivity;
 
 /*
- * The class is used to add ne discussion to a study room
+ * The class is used to add a new discussion to a study room
  */
 public class AddDiscussion extends AppCompatActivity {
 

@@ -35,7 +35,7 @@ public class StudyRoomActivity extends AppCompatActivity {
 
 
 		quizListView = (ListView)findViewById(R.id.quizListView);
-		/*quizAdapter = new QuizDiscussionListAdapter(getApplicationContext(),R.layout.list_view_item,
+		/*quizAdapter = new QuizDiscussionListAdapter(getApplicationContext(),R.layout.,
 				allQuizzes);
 		quizListView.setAdapter(quizAdapter);
 		quizListView.setOnItemClickListener(new QuizListListener
@@ -43,7 +43,7 @@ public class StudyRoomActivity extends AppCompatActivity {
 
 		discussionListView = (ListView)findViewById(R.id.discussionListView);
 		discussionAdapter = new DiscussionListAdapter(getApplicationContext(),
-				R.layout.list_view_item,allDiscussions);
+				R.layout.list_view_item_layout,allDiscussions);
 
 		discussionListView.setAdapter(discussionAdapter);
 		discussionListView.setOnItemClickListener(new DiscussionListListener

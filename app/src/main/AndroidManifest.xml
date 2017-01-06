@@ -31,6 +31,10 @@
         </activity>
         <activity android:name=".Discussion.AddDiscussion">
         </activity>
+
+        <activity android:name=".Discussion.AddCommentActivity"
+                  android:theme="@style/AppTheme.PopupTheme"/>
+
     </application>
 
 </manifest>

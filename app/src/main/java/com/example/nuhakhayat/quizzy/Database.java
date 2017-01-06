@@ -70,11 +70,11 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_FK_QUIZ_ID = "FK_QuizID";
 
     //Comments Table columns
-    public static final String COLUMN_PK_COMMENT_ID = "PK_CommentID";
-    public static final String COLUMN_COMMENT = "Comment";
-    public static final String COLUMN_LIKES_NUM = "LikesNum";
-    public static final String COLUMN_FK_COMMENTED_BY = "FK_CommentedBy";
-    public static final String COLUMN_FK_ON_DISCUSSION = "FK_OnDiscussion";
+    public static final String COLUMN_COMMENT_ID = "commentID";
+    public static final String COLUMN_COMMENT = "comment";
+    public static final String COLUMN_LIKED = "likesNum";
+    public static final String COLUMN_FK_USERNAME_COMMENT = "FK_username";
+    public static final String COLUMN_FK_DISCUSSION_NAME_COMMENT = "FK_discussionName";
 
     // Studies_Quizzes Table columns
     public static final String COLUMN_FK_QUIZ_ROOM_ID = "FK_RoomID";
@@ -95,10 +95,17 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_MAJORS +" text not null)";*/
 
 
-    final String DB_discussionCREATE = "CREATE TABLE " + DISCUSSION_TABLE + "(" + 
-            COLUMN_DISCUSSION_NAME + " VARCHAR(100) PRIMARY KEY, "+
-            COLUMN_DISCUSSION_DESCRIPTION + " TEXT, "+
-            FK_ROOM_DISCUS_ID+ " VARCHAR(10))";
+    final String DB_discussionCREATE = "CREATE TABLE " + DISCUSSION_TABLE + "("
+			+ COLUMN_DISCUSSION_NAME + " VARCHAR(100) PRIMARY KEY, "
+			+ COLUMN_DISCUSSION_DESCRIPTION + " TEXT, "
+			+ FK_ROOM_DISCUS_ID+ " VARCHAR(10))";
+
+	final String DB_commentsCREATE = "CREATE TABLE "+ COMMENTS_TABLE +"("
+			+ COLUMN_COMMENT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ COLUMN_COMMENT +" TEXT, "
+			+ COLUMN_LIKED + " BOOLEAN, "
+			+ COLUMN_FK_DISCUSSION_NAME_COMMENT + " VARCHAR(100), "
+			+ COLUMN_FK_USERNAME_COMMENT + " VARCHAR(50))";
 
 
 
@@ -118,13 +125,6 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_CORRECT_ANSWER + " text,"
             + COLUMN_FK_QUIZ_ID + " integer not null";
 
-    final String DB_commentsCREATE="CREATE TABLE "+ COMMENTS_TABLE +" ("
-            + COLUMN_PK_COMMENT_ID +" integer primary key autoincrement,"
-            + COLUMN_COMMENT +" text,"
-            + COLUMN_LIKES_NUM + " integer,"
-            + COLUMN_FK_ON_DISCUSSION + " integer not null,"
-            + COLUMN_FK_COMMENTED_BY + " text)";
-
     final String DB_roomQuizesCREATE="CREATE TABLE "+ STUDY_ROOM_QUIZ_TABLE +" ("
             + COLUMN_FK_QUIZ_ROOM_ID +" integer primary key,"
             + COLUMN_FK_ROOM_QUIZ_ID + " integer primary key)";*/
@@ -139,7 +139,9 @@ public class Database extends SQLiteOpenHelper {
 //        db.execSQL(DB_userCREATE);
 //        db.execSQL(DB_roomCREATE);
         db.execSQL(DB_discussionCREATE);
-		Log.d("Database",DB_discussionCREATE);
+		db.execSQL(DB_commentsCREATE);
+		Log.d("discussionTable",DB_discussionCREATE);
+		Log.d("commentTable",DB_commentsCREATE);
 //        db.execSQL(DB_quizCREATE);
 //        db.execSQL(DB_roomQuizesCREATE);
 //        db.execSQL(DB_questionCREATE);
@@ -185,8 +187,27 @@ public class Database extends SQLiteOpenHelper {
 		while(cursor.isAfterLast() == false){
 			discussion.add(cursor.getString(cursor.getColumnIndex(COLUMN_DISCUSSION_NAME)));
 			cursor.moveToNext();
-			}
+		}
 		return discussion;
+	}
+
+	public Cursor getComments(String discussionName){
+		SQLiteDatabase db = this.getReadableDatabase();
+		Log.d("getComments","SELECT * FROM " + COMMENTS_TABLE + " WHERE "
+				+ COLUMN_FK_DISCUSSION_NAME_COMMENT + " ='" + discussionName +"'");
+		Cursor cursor =  db.rawQuery( "SELECT * FROM " + COMMENTS_TABLE + " WHERE "
+				+ COLUMN_FK_DISCUSSION_NAME_COMMENT + " ='" + discussionName +"'", null );
+		return cursor;
+	}
+
+	public long insertCommetn(String comment, String discussionName, String username){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(COLUMN_COMMENT, comment);
+		contentValues.put(COLUMN_LIKED,false);
+		contentValues.put(COLUMN_FK_DISCUSSION_NAME_COMMENT,discussionName);
+		contentValues.put(COLUMN_FK_USERNAME_COMMENT,username);
+		return db.insert(COMMENTS_TABLE, null, contentValues);
 	}
 
 }

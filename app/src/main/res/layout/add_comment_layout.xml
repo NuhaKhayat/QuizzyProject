@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/White"
+              android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter comment"
+        android:background="@color/DarkGreen"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:id="@+id/textViewDisTitle"
+        android:textColor="@color/White"
+        android:padding="5dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/commnet_editText"
+        android:textColor="@color/Black"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_weight="0.40"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:text="Add"
+            android:padding="10dp"
+            android:id="@+id/add_comment_button"
+            android:layout_marginRight="10dp"
+            android:background="@color/DarkGreen"
+            android:textStyle="bold"
+            android:textColor="@color/White"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
+
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:text="Cancel"
+            android:id="@+id/cancel_commet_button"
+            android:layout_gravity="right"
+            android:layout_marginLeft="10dp"
+            android:background="@color/DarkGreen"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:textColor="@color/White"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
