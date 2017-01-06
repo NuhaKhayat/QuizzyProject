@@ -23,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
 		logout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(SettingsActivity.this, EditProfileActivity.class));
+				startActivity(new Intent(SettingsActivity.this, MainActivity.class));
 			}
 		});
 	}

@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UserProfileFragment">
+    tools:context=".UserProfileFragment"
+    android:weightSum="1">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/Green">
 
@@ -21,16 +22,6 @@
             android:textColor="@color/Black"
             android:layout_margin="10dp"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageViewseet"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/setting"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="12dp"/>
-
     </RelativeLayout>
 
     <ImageView
@@ -38,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:background="@drawable/profile"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,28 +47,63 @@
         android:layout_marginBottom="15dp"/>
 
     <TextView
-        android:text="Name:\t\t\t\t\tUser Name Will Be Here "
-        android:layout_width="wrap_content"
+        android:text="Fullname"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:id="@+id/textView1"
-        android:textColor="@color/Black"
-        android:layout_margin="10dp"/>
+        android:id="@+id/name" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/fullname" />
 
     <TextView
-        android:text="Email:\t\t\t\t\t\tUserEmail@Example.com"
-        android:layout_width="wrap_content"
+        android:text="Email"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:textColor="@color/Black"
-        android:layout_margin="10dp"/>
+        android:id="@+id/textView15" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/email"
+        android:text="Email" />
 
     <TextView
-        android:text="Birthday:\t\t\tMM/DD/YYYY"
-        android:layout_width="wrap_content"
+        android:text="Birthdate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:textColor="@color/Black"
-        android:layout_margin="10dp"/>
+        android:id="@+id/textView16" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/birthdate"
+        android:text="birthdate" />
+
+    <Button
+        android:text="EDIT PROFILE"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editProfile"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:background="@color/Blue" />
+
+    <Button
+        android:text="CHANGE PASSWORD"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/changePass"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:background="@color/Blue" />
 
 </LinearLayout>
