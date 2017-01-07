@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.nuhakhayat.quizzy.Database;
 import com.example.nuhakhayat.quizzy.R;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 /**
  * Created by NuhaKhayat on 1/4/17 AD.
@@ -88,26 +90,59 @@ public class DiscussionActivity extends AppCompatActivity {
 		Cursor cursor = database.getComments(title);
 		if(cursor != null && cursor.moveToFirst()){
 			while(cursor.isAfterLast() == false){
+				int id = cursor.getInt(cursor.getColumnIndex(Database.COLUMN_PK_COMMENT_ID));
 				String username = cursor.getString(
 						cursor.getColumnIndex(Database.COLUMN_FK_USERNAME_COMMENT));
 				String comment = cursor.getString(cursor.getColumnIndex(Database.COLUMN_COMMENT));
-				addCommentLayout(username,comment);
+				int liked = cursor.getInt(cursor.getColumnIndex(Database.COLUMN_COMMENT_LIKED));
+				addCommentLayout(id,username,comment,liked);
 				cursor.moveToNext();
 			}
 		}
 	}
 
 	//This method is used to dynamically add comment layout
-	public void addCommentLayout(String username, String comment){
+	public void addCommentLayout(int commentID , String username, String comment, final int liked){
+
+		//Retrieve and inflate the layout
 		LayoutInflater inflater = (LayoutInflater)getApplicationContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View commetnView = inflater.inflate(R.layout.comment_layout,null);
 
+		//Set the layout text view, username, comment, id
+		final TextView commentIdTV = (TextView)commetnView.findViewById(R.id.comment_id_textView);
 		TextView usernameTV = (TextView)commetnView.findViewById(R.id.username_comment_textView);
 		TextView commentTV = (TextView)commetnView.findViewById(R.id.comment_textView);
+		commentIdTV.setText(String.valueOf(commentID));
 		usernameTV.setText(username);
 		commentTV.setText(comment);
 
+		//Set the layout like button value and attributes
+		LikeButton likeCommentBtn = (LikeButton)commetnView.findViewById(R.id.like_commet_button);
+		likeCommentBtn.setCircleEndColorRes(R.color.Yellow);
+		likeCommentBtn.setCircleStartColorRes(R.color.MediumGreen);
+		likeCommentBtn.setExplodingDotColorsRes(R.color.DarkGreen,R.color.Yellow);
+		if(liked == 1){
+			likeCommentBtn.setLiked(true);
+		}else{
+			likeCommentBtn.setLiked(false);
+		}
+		//Set like button click listener to update the liked value is database
+		likeCommentBtn.setOnLikeListener(new OnLikeListener() {
+			@Override
+			public void liked(LikeButton likeButton) {
+				likeButton.setLiked(true);
+				int id = Integer.parseInt(commentIdTV.getText().toString());
+				database.updateCommentLiked(id,1);
+
+			}
+			@Override
+			public void unLiked(LikeButton likeButton) {
+				likeButton.setLiked(false);
+				int id = Integer.parseInt(commentIdTV.getText().toString());
+				database.updateCommentLiked(id,0);
+			}
+		});
 		ViewGroup rootLayout = (ViewGroup)findViewById(R.id.commentsLinearLayout);
 		rootLayout.addView(commetnView,0, new ViewGroup.LayoutParams
 				(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));

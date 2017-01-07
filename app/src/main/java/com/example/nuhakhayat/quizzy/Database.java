@@ -70,9 +70,9 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_FK_QUIZ_ID = "FK_QuizID";
 
     //Comments Table columns
-    public static final String COLUMN_COMMENT_ID = "commentID";
+    public static final String COLUMN_PK_COMMENT_ID = "commentID";
     public static final String COLUMN_COMMENT = "comment";
-    public static final String COLUMN_LIKED = "likesNum";
+    public static final String COLUMN_COMMENT_LIKED = "likesNum";
     public static final String COLUMN_FK_USERNAME_COMMENT = "FK_username";
     public static final String COLUMN_FK_DISCUSSION_NAME_COMMENT = "FK_discussionName";
 
@@ -101,9 +101,9 @@ public class Database extends SQLiteOpenHelper {
 			+ FK_ROOM_DISCUS_ID+ " VARCHAR(10))";
 
 	final String DB_commentsCREATE = "CREATE TABLE "+ COMMENTS_TABLE +"("
-			+ COLUMN_COMMENT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ COLUMN_PK_COMMENT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
 			+ COLUMN_COMMENT +" TEXT, "
-			+ COLUMN_LIKED + " BOOLEAN, "
+			+ COLUMN_COMMENT_LIKED + " INTEGER, "
 			+ COLUMN_FK_DISCUSSION_NAME_COMMENT + " VARCHAR(100), "
 			+ COLUMN_FK_USERNAME_COMMENT + " VARCHAR(50))";
 
@@ -204,10 +204,17 @@ public class Database extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(COLUMN_COMMENT, comment);
-		contentValues.put(COLUMN_LIKED,false);
+		contentValues.put(COLUMN_COMMENT_LIKED,0);
 		contentValues.put(COLUMN_FK_DISCUSSION_NAME_COMMENT,discussionName);
 		contentValues.put(COLUMN_FK_USERNAME_COMMENT,username);
 		return db.insert(COMMENTS_TABLE, null, contentValues);
+	}
+
+	public long updateCommentLiked(int id, int liked){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(COLUMN_COMMENT_LIKED,liked);
+		return db.update(COMMENTS_TABLE,contentValues,COLUMN_PK_COMMENT_ID +" = '"+id+"'",null);
 	}
 
 }

@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.nuhakhayat.quizzy.Database;
 import com.example.nuhakhayat.quizzy.R;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
+
 
 /**
  * Created by NuhaKhayat on 1/7/17 AD.
@@ -89,6 +91,5 @@ public class AddCommentActivity extends AppCompatActivity {
 
 			}
 		});
-
 	}
 }
