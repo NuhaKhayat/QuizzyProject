@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Quizzy</string>
+    <string name="username">USERNAME</string>
+    <string name="password">PASSWORD</string>
+    <string name="signin">SIGN IN</string>
+    <string name="signup">SIGN UP</string>
+
 
     <string-array name="ListOfQuizzes">
         <item>Quiz #1\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLevel of difficulty</item>
