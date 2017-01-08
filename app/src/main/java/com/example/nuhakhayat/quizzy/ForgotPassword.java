@@ -2,10 +2,13 @@ package com.example.nuhakhayat.quizzy;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +33,7 @@ public class ForgotPassword extends AppCompatActivity {
     EditText usernameET;
     Button resetBtn;
     Database db;
-
+    String m_Text = "";
     Session session = null;
     ProgressDialog pdialog = null;
     Context context = null;
@@ -63,9 +66,9 @@ public class ForgotPassword extends AppCompatActivity {
                         cursor.close();
 
                         RandomCode = generateRandomCode();
-
+                        showCodeDialog();
                         //send email
-                        rec = email;
+                        /*rec = email;
                         subject = "Quizzy Reset Password";
                         textMessage = "Hi "+username+"!, \n This email was sent to you based on your request. \n" +
                                 "Password reset code is: "+RandomCode+", please enter this code in the dialog provided in the Quizzy app.\n" +
@@ -87,7 +90,7 @@ public class ForgotPassword extends AppCompatActivity {
                         pdialog = ProgressDialog.show(context, "", "Sending Mail...", true);
 
                         RetreiveFeedTask task = new RetreiveFeedTask();
-                        task.execute();
+                        task.execute();*/
                     }else {
                         Toast.makeText(ForgotPassword.this, "Username doesn't exist.", Toast.LENGTH_LONG).show();
                     }
@@ -140,6 +143,36 @@ public class ForgotPassword extends AppCompatActivity {
         Code = "QZ"+rand1+L1+rand2+L2+rand3;
 
         return Code;
+    }
+
+    public void showCodeDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter Code");
+
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+// Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                m_Text = input.getText().toString();
+                Toast.makeText(getApplicationContext(), m_Text , Toast.LENGTH_LONG).show();
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }
 
