@@ -57,16 +57,17 @@ public class Database extends SQLiteOpenHelper {
     //Quiz Table columns
     public static final String COLUMN_PK_QUIZ_ID = "PK_QuizID";
     public static final String COLUMN_QUIZ_TITLE = "QuizTitle";
-    public static final String COLUMN_FK_QUIZ_CREATED_BY = "FK_QuizBy";
+	public static final String COLUMN_QUIZ_Q_NUM = "NumOfQuestion";
     public static final String COLUMN_FK_ROOM_QUIZ = "FK_RoomQuiz";
 
     //Question Table columns
     public static final String COLUMN_PK_QUESTION_ID = "PK_QuestionID";
-    public static final String COLUMN_QYESTION = "Question";
+    public static final String COLUMN_QUESTION = "Question";
     public static final String COLUMN_ANSWER_1 = "Answer1";
     public static final String COLUMN_ANSWER_2 = "Answer2";
     public static final String COLUMN_ANSWER_3 = "Answer3";
-    public static final String COLUMN_CORRECT_ANSWER = "CorrectAnswer";
+	public static final String COLUMN_ANSWER_4 = "Answer4";
+    public static final String COLUMN_CORRECT_ANSWER_POSITION = "CorrectAnswerPos";
     public static final String COLUMN_FK_QUIZ_ID = "FK_QuizID";
 
     //Comments Table columns
@@ -107,23 +108,28 @@ public class Database extends SQLiteOpenHelper {
 			+ COLUMN_FK_DISCUSSION_NAME_COMMENT + " VARCHAR(100), "
 			+ COLUMN_FK_USERNAME_COMMENT + " VARCHAR(50))";
 
+	final String DB_quizCREATE="CREATE TABLE "+ QUIZ_TABLE + "("
+			+ COLUMN_PK_QUIZ_ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"
+			+ COLUMN_QUIZ_TITLE+ " VARCHAR(100), "
+			+ COLUMN_QUIZ_Q_NUM+ " INTEGER, "
+			+ COLUMN_FK_ROOM_QUIZ + " VARCHAR(10))";
+
+	final String DB_questionCREATE = "CREATE TABLE "+ QUESTION_TABLE + "("
+			+ COLUMN_PK_QUESTION_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ COLUMN_QUESTION+ " TEXT, "
+			+ COLUMN_ANSWER_1+ " TEXT, "
+			+ COLUMN_ANSWER_2+ " TEXT, "
+			+ COLUMN_ANSWER_3+ " TEXT, "
+			+ COLUMN_ANSWER_4+ " TEXT, "
+			+ COLUMN_CORRECT_ANSWER_POSITION + " INTEGER, "
+			+ COLUMN_FK_QUIZ_ID + " INTEGER)";
+
 
 
     
-/*    final String DB_quizCREATE="CREATE TABLE "+ QUIZ_TABLE +" ("
-            + COLUMN_PK_QUIZ_ID +" integer primary key autoincrement,"
-            +COLUMN_QUIZ_TITLE+" text,"
-            + COLUMN_FK_ROOM_QUIZ + " integer not null,"
-            + COLUMN_FK_QUIZ_CREATED_BY + " text)";
+/*
 
-    final String DB_questionCREATE="CREATE TABLE "+ QUESTION_TABLE +" ("
-            + COLUMN_PK_QUESTION_ID +" integer primary key autoincrement,"
-            +COLUMN_QYESTION+" text not null,"
-            +COLUMN_ANSWER_1+ " text,"
-            +COLUMN_ANSWER_2+ " text,"
-            +COLUMN_ANSWER_3+ " text,"
-            + COLUMN_CORRECT_ANSWER + " text,"
-            + COLUMN_FK_QUIZ_ID + " integer not null";
+
 
     final String DB_roomQuizesCREATE="CREATE TABLE "+ STUDY_ROOM_QUIZ_TABLE +" ("
             + COLUMN_FK_QUIZ_ROOM_ID +" integer primary key,"
@@ -140,11 +146,9 @@ public class Database extends SQLiteOpenHelper {
 //        db.execSQL(DB_roomCREATE);
         db.execSQL(DB_discussionCREATE);
 		db.execSQL(DB_commentsCREATE);
-		Log.d("discussionTable",DB_discussionCREATE);
-		Log.d("commentTable",DB_commentsCREATE);
-//        db.execSQL(DB_quizCREATE);
+		db.execSQL(DB_quizCREATE);
+		db.execSQL(DB_questionCREATE);
 //        db.execSQL(DB_roomQuizesCREATE);
-//        db.execSQL(DB_questionCREATE);
 //        db.execSQL(DB_commentsCREATE);
 //        db.execSQL(DB_majorCREATE);
     }
@@ -215,6 +219,49 @@ public class Database extends SQLiteOpenHelper {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(COLUMN_COMMENT_LIKED,liked);
 		return db.update(COMMENTS_TABLE,contentValues,COLUMN_PK_COMMENT_ID +" = '"+id+"'",null);
+	}
+
+
+	public long insertQuiz(String title, int numOfQ, String roomId){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(COLUMN_QUIZ_TITLE,title);
+		contentValues.put(COLUMN_QUIZ_Q_NUM,numOfQ);
+		contentValues.put(COLUMN_FK_ROOM_QUIZ,roomId);
+		return db.insert(QUIZ_TABLE, null, contentValues);
+	}
+
+
+	public Cursor getQuiz(String name) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		return db.rawQuery( "SELECT * FROM " + QUIZ_TABLE +" WHERE "
+				+ COLUMN_QUIZ_TITLE +" = '"+ name +"'", null);
+	}
+
+	public List<String> getAllQuizzes() {
+		List<String> quiz = new ArrayList<>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor =  db.rawQuery( "SELECT * FROM " + QUIZ_TABLE, null);
+		cursor.moveToFirst();
+		while(cursor.isAfterLast() == false){
+			quiz.add(cursor.getString(cursor.getColumnIndex(COLUMN_QUIZ_TITLE)));
+			cursor.moveToNext();
+		}
+		return quiz;
+	}
+
+	public long insertQuestion(String question, String ans1, String ans2, String ans3, String ans4,
+							   int pos, int quizId){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(COLUMN_QUESTION, question);
+		contentValues.put(COLUMN_ANSWER_1,ans1);
+		contentValues.put(COLUMN_ANSWER_2,ans2);
+		contentValues.put(COLUMN_ANSWER_3,ans3);
+		contentValues.put(COLUMN_ANSWER_4,ans4);
+		contentValues.put(COLUMN_CORRECT_ANSWER_POSITION, pos);
+		contentValues.put(COLUMN_FK_QUIZ_ID,quizId);
+		return db.insert(QUESTION_TABLE, null, contentValues);
 	}
 
 }

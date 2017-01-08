@@ -17,11 +17,11 @@
         </activity>
         <activity android:name=".StudyRoomActivity">
         </activity>
-        <activity android:name=".QuizActivity">
+        <activity android:name=".Quiz.QuizActivity">
         </activity>
         <activity android:name=".Discussion.DiscussionActivity">
         </activity>
-        <activity android:name=".AddQuizActivity">
+        <activity android:name=".Quiz.AddQuizActivity">
         </activity>
         <activity android:name=".SettingsActivity">
         </activity>
