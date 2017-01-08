@@ -81,7 +81,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_FK_QUIZ_ROOM_ID = "FK_RoomID";
     public static final String COLUMN_FK_ROOM_QUIZ_ID = "FK_RoomQuizID";
 
-   /* // Queries for creating the tables with their columns
+    // Queries for creating the tables with their columns
     final String DB_userCREATE="CREATE TABLE "+ USER_TABLE +" ("
             + COLUMN_PK_USERNAME +" text primary key,"
             + COLUMN_EMAIL +" text not null,"
@@ -93,7 +93,7 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_COURSE +" text not null)";
 
     final String DB_majorCREATE="CREATE TABLE "+ MAJORS_TABLE +" ("+ COLUMN_FK_ROOM_MAJOR +" integer,"
-            + COLUMN_MAJORS +" text not null)";*/
+            + COLUMN_MAJORS +" text not null)";
 
 
     final String DB_discussionCREATE = "CREATE TABLE " + DISCUSSION_TABLE + "("
@@ -126,7 +126,7 @@ public class Database extends SQLiteOpenHelper {
 
 
 
-    
+
 /*
 
 
@@ -263,5 +263,46 @@ public class Database extends SQLiteOpenHelper {
 		contentValues.put(COLUMN_FK_QUIZ_ID,quizId);
 		return db.insert(QUESTION_TABLE, null, contentValues);
 	}
+
+    public boolean checkUsername (String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String Query = "SELECT * FROM "+USER_TABLE+" WHERE "+COLUMN_PK_USERNAME+" = '"+username+"'";
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return true;
+        }
+        cursor.close();
+        return false;
+    }
+
+    public long signup(String username, String email, String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PK_USERNAME, username);
+        contentValues.put(COLUMN_EMAIL, email);
+        contentValues.put(COLUMN_PASSWORD, password);
+        return db.insert(USER_TABLE, null, contentValues);
+    }
+
+    public boolean login (String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String Query = "SELECT * FROM "+USER_TABLE+" WHERE "+COLUMN_PK_USERNAME+" = '"+username+"' AND "+
+                COLUMN_PASSWORD+" = '"+password+"'";
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() == 1){
+            cursor.close();
+            return true;
+        }
+        cursor.close();
+        return false;
+    }
+
+    public Cursor getEmail (String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String Query = "SELECT "+COLUMN_EMAIL+" FROM "+USER_TABLE+" WHERE "+COLUMN_PK_USERNAME+" = '"+username+"'";
+        Cursor cursor = db.rawQuery(Query, null);
+        return cursor;
+    }
 
 }

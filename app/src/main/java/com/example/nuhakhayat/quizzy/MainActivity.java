@@ -2,6 +2,7 @@ package com.example.nuhakhayat.quizzy;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.nuhakhayat.quizzy.NavDrawerMenu.NavDrawerItem;
@@ -53,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setSlideMenu();
+
+		Button signup = (Button) findViewById(R.id.mybutton);
+		signup.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(MainActivity.this, Login.class);
+				startActivity(intent);
+			}
+		});
 
 		if (savedInstanceState == null) {
 			mDrawerLayout.openDrawer(mDrawerList);

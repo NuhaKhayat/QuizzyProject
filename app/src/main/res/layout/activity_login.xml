@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/login_background"
+    tools:context="com.example.nuhakhayat.quizzy.Login">
+
+    <TextView
+        android:text="@string/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:id="@+id/textView17"
+        android:textColor="@color/Black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:text="@string/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="67dp"
+        android:id="@+id/textView16"
+        android:textColor="@color/Black"
+        android:textStyle="bold"
+        android:layout_below="@+id/textView17"
+        android:layout_alignStart="@+id/textView17" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/log"
+        android:layout_marginTop="16dp"
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="@string/signup"
+        android:layout_width="200dip"
+        android:layout_height="wrap_content"
+        android:id="@+id/signupBtn"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        android:background="@color/transparentBlack"
+        android:layout_below="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:text="Forgot Password?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgotPassTV"
+        android:layout_below="@+id/passET"
+        android:layout_alignStart="@+id/passET"
+        android:textColor="@color/DeepRed"
+        android:textStyle="bold"/>
+
+    <Button
+        android:text="@string/signin"
+        android:layout_width="200dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:id="@+id/button"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        android:background="@color/transparentBlack"
+        android:layout_below="@+id/forgotPassTV"
+        android:layout_alignEnd="@+id/passET" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Username"
+        android:ems="10"
+        android:id="@+id/usernET"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/textView17"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:hint="**********"
+        android:id="@+id/passET"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/textView16"
+        android:layout_alignStart="@+id/usernET" />
+
+
+</RelativeLayout>

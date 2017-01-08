@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.nuhakhayat.quizzy">
+    package="com.example.nuhakhayat.quizzy">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,30 +12,31 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StudyRoomActivity">
-        </activity>
-        <activity android:name=".Quiz.QuizActivity">
-        </activity>
-        <activity android:name=".Discussion.DiscussionActivity">
-        </activity>
-        <activity android:name=".Quiz.AddQuizActivity">
-        </activity>
-        <activity android:name=".SettingsActivity">
-        </activity>
-        <activity android:name=".AddStudyRoomActivity">
-        </activity>
-        <activity android:name=".EditProfileActivity">
-        </activity>
-        <activity android:name=".Discussion.AddDiscussion">
-        </activity>
+        <activity android:name=".StudyRoomActivity" />
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".Discussion.DiscussionActivity" />
+        <activity android:name=".AddQuizActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".AddStudyRoomActivity" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".Discussion.AddDiscussion" />
+        <activity
+            android:name=".Discussion.AddCommentActivity"
+            android:theme="@style/AppTheme.PopupTheme" />
+        <activity android:name=".Login" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".ForgotPassword"></activity>
 
-        <activity android:name=".Discussion.AddCommentActivity"
-                  android:theme="@style/AppTheme.PopupTheme"/>
+        <receiver android:name=".broadcastResever">
+            <intent-filter>
+                <action android:name="com.example.nuhakhayat.quizzy" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
