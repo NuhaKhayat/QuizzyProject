@@ -17,10 +17,12 @@ public class Login extends AppCompatActivity {
     String username, password;
     Database db;
 
+    broadcastResever br;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         db = new Database(getApplicationContext());
 
@@ -50,6 +52,14 @@ public class Login extends AppCompatActivity {
                 }else {
                     if(db.login(username, password)) {
                         Toast.makeText(Login.this, "logged in.", Toast.LENGTH_LONG).show();
+                        //send username
+                        Intent intent = new Intent ();
+                        intent.setAction("com.example.nuhakhayat.quizzy");
+                        intent.putExtra("username", username);
+                        sendBroadcast(intent);
+
+                        Intent myintent = new Intent(Login.this,  MainActivity.class);
+                        startActivity(myintent);
                     }else {
                         Toast.makeText(Login.this, "Username & Password doesn't match or exists .", Toast.LENGTH_LONG).show();
                     }

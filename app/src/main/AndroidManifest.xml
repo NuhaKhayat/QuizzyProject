@@ -3,6 +3,7 @@
     package="com.example.nuhakhayat.quizzy">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,6 +31,13 @@
         <activity android:name=".Login" />
         <activity android:name=".SignUp" />
         <activity android:name=".ForgotPassword"></activity>
+
+        <receiver android:name=".broadcastResever">
+            <intent-filter>
+                <action android:name="com.example.nuhakhayat.quizzy" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
