@@ -1,4 +1,4 @@
-package com.example.nuhakhayat.quizzy;
+package com.example.nuhakhayat.quizzy.StudyRoom;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.example.nuhakhayat.quizzy.Database;
 import com.example.nuhakhayat.quizzy.Discussion.AddDiscussion;
 import com.example.nuhakhayat.quizzy.Discussion.DiscussionListAdapter;
 import com.example.nuhakhayat.quizzy.Discussion.DiscussionListListener;
 import com.example.nuhakhayat.quizzy.Quiz.AddQuizActivity;
 import com.example.nuhakhayat.quizzy.Quiz.QuizListAdapter;
 import com.example.nuhakhayat.quizzy.Quiz.QuizListListener;
+import com.example.nuhakhayat.quizzy.R;
 
 import java.util.List;
 

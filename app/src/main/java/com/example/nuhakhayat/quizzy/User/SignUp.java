@@ -1,15 +1,14 @@
-package com.example.nuhakhayat.quizzy;
+package com.example.nuhakhayat.quizzy.User;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.example.nuhakhayat.quizzy.Database;
+import com.example.nuhakhayat.quizzy.R;
 
 public class SignUp extends AppCompatActivity {
 

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.nuhakhayat.quizzy.Database;
 import com.example.nuhakhayat.quizzy.R;
-import com.example.nuhakhayat.quizzy.StudyRoomActivity;
+import com.example.nuhakhayat.quizzy.StudyRoom.StudyRoomActivity;
 
 /*
  * The class is used to add a new discussion to a study room

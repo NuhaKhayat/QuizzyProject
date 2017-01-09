@@ -1,4 +1,4 @@
-package com.example.nuhakhayat.quizzy;
+package com.example.nuhakhayat.quizzy.User;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.nuhakhayat.quizzy.Database;
+import com.example.nuhakhayat.quizzy.MainActivity;
+import com.example.nuhakhayat.quizzy.R;
+import com.example.nuhakhayat.quizzy.broadcastResever;
 
 public class Login extends AppCompatActivity {
 

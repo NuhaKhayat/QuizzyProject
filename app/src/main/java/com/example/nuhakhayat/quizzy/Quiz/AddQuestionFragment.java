@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -19,8 +18,9 @@ import com.example.nuhakhayat.quizzy.R;
 /**
  * Created by NuhaKhayat on 1/8/17 AD.
  */
-public class QuestionFragment extends Fragment{
+public class AddQuestionFragment extends Fragment{
 
+	String TAG = "AddQuestionFragment";
 	EditText question, answer1, answer2, answer3, answer4;
 	RadioGroup correctAnswer;
 	Button add;
@@ -31,8 +31,8 @@ public class QuestionFragment extends Fragment{
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.question_layout,null,false);
-
+		View view = inflater.inflate(R.layout.add_question_layout,null,false);
+		Log.d(TAG,"onCreateView");
 		question = (EditText)view.findViewById(R.id.qestion_editText);
 		answer1 = (EditText)view.findViewById(R.id.answer_1_editText);
 		answer2 = (EditText)view.findViewById(R.id.answer_2_editText);
@@ -59,7 +59,6 @@ public class QuestionFragment extends Fragment{
 				}
 			}
 		});
-
 		return view;
 	}
 
@@ -68,6 +67,7 @@ public class QuestionFragment extends Fragment{
 		super.onAttach(activity);
 		try {
 			communicator = (Communicator) activity;
+			Log.d(TAG,"onAttach");
 		}catch (Exception e){
 			Log.d("QuestionFragment",e.getMessage());
 
@@ -75,12 +75,12 @@ public class QuestionFragment extends Fragment{
 	}
 
 	public boolean getData(){
+		Log.d(TAG,"getData");
 		String q = question.getText().toString();
 		String a1 = answer1.getText().toString();
 		String a2 = answer2.getText().toString();
 		String a3 = answer3.getText().toString();
 		String a4 = answer4.getText().toString();
-
 		if(q.isEmpty()){
 			Toast.makeText(getActivity().getApplicationContext(),"Enter question",
 					Toast.LENGTH_SHORT).show();

@@ -1,4 +1,4 @@
-package com.example.nuhakhayat.quizzy;
+package com.example.nuhakhayat.quizzy.StudyRoom;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -11,6 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.example.nuhakhayat.quizzy.Database;
+import com.example.nuhakhayat.quizzy.R;
 
 import java.util.List;
 
@@ -25,7 +28,7 @@ public class AllStudyRoomsFragment extends Fragment {
 		ListView listView = (ListView)view.findViewById(R.id.listViewall);
 
 
-		final List<String> courseList=db.getAllCourses();
+		final List<String> courseList = db.getAllCourses();
 
 		listView.setAdapter(new ArrayAdapter(view.getContext(),android.R.layout.simple_list_item_1, courseList));
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

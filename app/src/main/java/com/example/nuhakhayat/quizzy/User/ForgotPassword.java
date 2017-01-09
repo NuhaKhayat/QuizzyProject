@@ -1,4 +1,4 @@
-package com.example.nuhakhayat.quizzy;
+package com.example.nuhakhayat.quizzy.User;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,19 +9,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Properties;
+import com.example.nuhakhayat.quizzy.Database;
+import com.example.nuhakhayat.quizzy.R;
+
 import java.util.Random;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;

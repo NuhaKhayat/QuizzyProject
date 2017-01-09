@@ -2,6 +2,7 @@ package com.example.nuhakhayat.quizzy.Quiz;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -26,7 +27,7 @@ public class QuizListListener implements AdapterView.OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intent intent = new Intent(activity.getApplicationContext(),QuizActivity.class);
-		intent.putExtra("title",allItems.get(0));
+		intent.putExtra("title",allItems.get(position));
 		activity.startActivity(intent);
 	}
 }
