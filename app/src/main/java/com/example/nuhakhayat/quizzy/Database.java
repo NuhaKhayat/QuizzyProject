@@ -91,10 +91,10 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_PASSWORD + " text not null,"
             + COLUMN_STARS_NUM + " integer)";
 
-    final String DB_roomCREATE="CREATE TABLE "+ STUDY_ROOM_TABLE +" ("
+    /*final String DB_roomCREATE="CREATE TABLE "+ STUDY_ROOM_TABLE +" ("
             + COLUMN_PK_ROOM_ID +" integer primary key autoincrement,"
             + COLUMN_COURSE +" text not null)";
-/*
+
     final String DB_majorCREATE="CREATE TABLE "+ MAJORS_TABLE +" ("+ COLUMN_FK_ROOM_MAJOR +" integer,"
             + COLUMN_MAJORS +" text not null)";
 
@@ -120,7 +120,7 @@ public class Database extends SQLiteOpenHelper {
             +COLUMN_ANSWER_2+ " text,"
             +COLUMN_ANSWER_3+ " text,"
             + COLUMN_CORRECT_ANSWER + " text,"
-            + COLUMN_FK_QUIZ_ID + " integer not null";
+            + COLUMN_FK_QUIZ_ID + " integer not null";*/
 
     final String DB_commentsCREATE="CREATE TABLE "+ COMMENTS_TABLE +" ("
             + COLUMN_PK_COMMENT_ID +" integer primary key autoincrement,"
@@ -129,7 +129,7 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_FK_ON_DISCUSSION + " integer not null,"
             + COLUMN_FK_COMMENTED_BY + " text)";
 
-    final String DB_roomQuizesCREATE="CREATE TABLE "+ STUDY_ROOM_QUIZ_TABLE +" ("
+    /*final String DB_roomQuizesCREATE="CREATE TABLE "+ STUDY_ROOM_QUIZ_TABLE +" ("
             + COLUMN_FK_QUIZ_ROOM_ID +" integer primary key,"
             + COLUMN_FK_ROOM_QUIZ_ID + " integer primary key)";*/
 
@@ -177,7 +177,7 @@ public class Database extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getReadableDatabase();
         db.rawQuery("SELECT * FROM " + COMMENTS_TABLE + " WHERE "
-                + COLUMN_LIKES_NUM + " = '" + likes + "'"+" = '"+1, null);
+                + COLUMN_LIKES_NUM + " = '" + 1 + "'", null);
 
         return likes;
 

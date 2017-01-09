@@ -1,5 +1,6 @@
 package com.example.nuhakhayat.quizzy;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	EditText edittxt1, edittxt2;
 	Database db;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,8 +26,7 @@ public class EditProfileActivity extends AppCompatActivity {
 		change = (Button) findViewById(R.id.changepass);
 		edittxt1 = (EditText) findViewById(R.id.editPass);
 		edittxt2 = (EditText) findViewById(R.id.conPass);
-		String pass= edittxt1.getText().toString();
-		String con = edittxt2.getText().toString();
+
 
 		change.setOnClickListener(new View.OnClickListener() {
 			@Override

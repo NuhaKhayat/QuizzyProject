@@ -2,8 +2,8 @@ package com.example.nuhakhayat.quizzy;
 
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +22,7 @@ public class UserProfileFragment extends Fragment {
 	EditText fullname,email;
 	Button editProfile, changePassword;
 	Database db;
+	BroadcastReceiver brUsername;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 	final View view = inflater.inflate(R.layout.fragment_user_profile,container,false);
@@ -35,10 +36,11 @@ public class UserProfileFragment extends Fragment {
 		editProfile =(Button)view.findViewById(R.id.editProfile);
 		changePassword = (Button)view.findViewById(R.id.changepass);
 
-		//int stars = (db.numOfLikes()/5);
-		//rating.setRating(int);
+		int stars = (db.numOfLikes(1)/5);
+		rating.setRating(stars);
 
-
+		//userId=brUsername.Username;
+		//username.setText(userId);
 
 
 		changePassword.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +56,7 @@ public class UserProfileFragment extends Fragment {
 					db.updateProfile(username.getText().toString(), fullname.getText().toString(), email.getText().toString());
 					db.close();
 					Toast.makeText(getActivity().getApplicationContext(), "Done", Toast.LENGTH_LONG).show();
+					startActivity(new Intent(getActivity().getApplicationContext(),MainActivity.class));
 				} else {
 					Toast.makeText(getActivity().getApplicationContext(), "Filed cannot be empty!", Toast.LENGTH_LONG).show();
 				}
