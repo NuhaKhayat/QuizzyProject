@@ -1,19 +1,13 @@
 package com.example.nuhakhayat.quizzy.Quiz;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nuhakhayat.quizzy.R;
-import com.example.nuhakhayat.quizzy.StudyRoomActivity;
 
 public class QuizActivity extends AppCompatActivity implements Communicator{
 

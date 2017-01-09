@@ -1,8 +1,7 @@
-package com.example.nuhakhayat.quizzy;
+package com.example.nuhakhayat.quizzy.User;
 
 
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +12,11 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.nuhakhayat.quizzy.Database;
+import com.example.nuhakhayat.quizzy.MainActivity;
+import com.example.nuhakhayat.quizzy.R;
+import com.example.nuhakhayat.quizzy.broadcastResever;
 
 
 public class UserProfileFragment extends Fragment {

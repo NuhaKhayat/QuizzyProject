@@ -1,4 +1,4 @@
-package com.example.nuhakhayat.quizzy;
+package com.example.nuhakhayat.quizzy.StudyRoom;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +14,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nuhakhayat.quizzy.Database;
+import com.example.nuhakhayat.quizzy.R;
+import com.example.nuhakhayat.quizzy.broadcastResever;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class AddStudyRoomActivity extends AppCompatActivity {
 	// Define the layout elements

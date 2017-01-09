@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.nuhakhayat.quizzy.Database;
 import com.example.nuhakhayat.quizzy.R;
-import com.example.nuhakhayat.quizzy.StudyRoomActivity;
+import com.example.nuhakhayat.quizzy.StudyRoom.StudyRoomActivity;
 
 public class AddQuizActivity extends AppCompatActivity implements Communicator{
 

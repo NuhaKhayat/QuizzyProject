@@ -1,7 +1,5 @@
 package com.example.nuhakhayat.quizzy;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -9,8 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +15,9 @@ import android.widget.ListView;
 
 import com.example.nuhakhayat.quizzy.NavDrawerMenu.NavDrawerItem;
 import com.example.nuhakhayat.quizzy.NavDrawerMenu.NavDrawerListAdapter;
+import com.example.nuhakhayat.quizzy.StudyRoom.AllStudyRoomsFragment;
+import com.example.nuhakhayat.quizzy.User.Login;
+import com.example.nuhakhayat.quizzy.User.UserProfileFragment;
 
 import java.util.ArrayList;
 

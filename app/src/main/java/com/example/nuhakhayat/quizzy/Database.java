@@ -142,7 +142,6 @@ public class Database extends SQLiteOpenHelper {
         // Execute the queries to create the tables
         db.execSQL(DB_roomCREATE);
         db.execSQL(DB_userCREATE);
-        db.execSQL(DB_roomCREATE);
         db.execSQL(DB_discussionCREATE);
         db.execSQL(DB_quizCREATE);
         db.execSQL(DB_questionCREATE);
@@ -388,6 +387,29 @@ public class Database extends SQLiteOpenHelper {
         return db.insert(SUB_ROOM_TABLE, null, contentValues);
     }
 
+
+	public List<String> getAllCourses() {
+		 List<String> course = new ArrayList<>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + STUDY_ROOM_TABLE, null);
+		cursor.moveToFirst();
+		while (cursor.isAfterLast() == false) {
+			course.add(cursor.getString(cursor.getColumnIndex(COLUMN_COURSE)));
+			cursor.moveToNext();
+		}
+		return course;
+	}
+
+	public int updateProfile(String username, String fullname, String email) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues cv = new ContentValues();
+		cv.put(COLUMN_PK_USERNAME,username);
+		cv.put(COLUMN_FULLNAME, fullname);
+		cv.put(COLUMN_EMAIL, email);
+		String selection = COLUMN_PK_USERNAME+" = ?";
+		String[] selectionArgs = { String.valueOf(username) };
+		return db.update(USER_TABLE, cv, selection, selectionArgs);
+	}
 }
 
 
