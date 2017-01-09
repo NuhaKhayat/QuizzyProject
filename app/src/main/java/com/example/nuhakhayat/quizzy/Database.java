@@ -48,7 +48,6 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_FULLNAME = "fullname";
     public static final String COLUMN_EMAIL = "Email";
     public static final String COLUMN_PASSWORD = "Password";
-    public static final String COLUMN_BDATE = "bdate";
     public static final String COLUMN_STARS_NUM = "StarsNum";
 
     //Discussion Table columns
@@ -91,11 +90,11 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_EMAIL + " text not null,"
             + COLUMN_PASSWORD + " text not null,"
             + COLUMN_STARS_NUM + " integer)";
-/*
+
     final String DB_roomCREATE="CREATE TABLE "+ STUDY_ROOM_TABLE +" ("
             + COLUMN_PK_ROOM_ID +" integer primary key autoincrement,"
             + COLUMN_COURSE +" text not null)";
-
+/*
     final String DB_majorCREATE="CREATE TABLE "+ MAJORS_TABLE +" ("+ COLUMN_FK_ROOM_MAJOR +" integer,"
             + COLUMN_MAJORS +" text not null)";
 
@@ -174,6 +173,15 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(FK_ROOM_DISCUS_ID, roomId);
         return db.insert(DISCUSSION_TABLE, null, contentValues);
     }
+    public int numOfLikes(int likes)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.rawQuery("SELECT * FROM " + COMMENTS_TABLE + " WHERE "
+                + COLUMN_LIKES_NUM + " = '" + likes + "'"+" = '"+1, null);
+
+        return likes;
+
+    }
 
     public Cursor getDiscussion(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -183,31 +191,49 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public List<String> getAllDiscussions() {
-        List<String> discussion = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DISCUSSION_TABLE, null);
-        cursor.moveToFirst();
-        while (cursor.isAfterLast() == false) {
-            discussion.add(cursor.getString(cursor.getColumnIndex(COLUMN_DISCUSSION_NAME)));
-            cursor.moveToNext();
-        }
+            List<String> discussion = new ArrayList<>();
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery("SELECT * FROM " + DISCUSSION_TABLE, null);
+            cursor.moveToFirst();
+            while (cursor.isAfterLast() == false) {
+                discussion.add(cursor.getString(cursor.getColumnIndex(COLUMN_DISCUSSION_NAME)));
+                cursor.moveToNext();
+            }
         return discussion;
     }
-
-    public void updateProfile(int id, String fullname, String email, String bdate) {
+    public List<String> getAllCourses() {
+        List<String> course = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + STUDY_ROOM_TABLE, null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            course.add(cursor.getString(cursor.getColumnIndex(COLUMN_COURSE)));
+            cursor.moveToNext();
+        }
+        return course;
+    }
+
+    public int updateProfile(String username, String fullname, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+        cv.put(COLUMN_PK_USERNAME,username);
         cv.put(COLUMN_FULLNAME, fullname);
         cv.put(COLUMN_EMAIL, email);
-        cv.put(COLUMN_BDATE, bdate);
-        db.update(USER_TABLE, cv,COLUMN_PK_USERNAME+id, null);
+        String selection = COLUMN_PK_USERNAME+" = ?";
+        String[] selectionArgs = { String.valueOf(username) };
+        //db.update(USER_TABLE, cv,COLUMN_PK_USERNAME+"="+username, null);
+        int count = db.update(USER_TABLE, cv, selection, selectionArgs);
+        return count;
 
     }
-    public void changePass (int id , String password ){
+    public int changePass ( String username,String password ){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_PASSWORD,password);
-        db.update(USER_TABLE, cv,COLUMN_PK_USERNAME+id, null);
+        //String selection = COLUMN_PK_USERNAME+" = ?";
+        //String[] selectionArgs = { String.valueOf(username) };
+        int count = db.update(USER_TABLE, cv,COLUMN_PK_USERNAME+"="+username, null);
+        return count;
     }
 
 

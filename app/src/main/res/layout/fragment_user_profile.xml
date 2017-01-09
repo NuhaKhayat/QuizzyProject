@@ -24,12 +24,14 @@
 
     </RelativeLayout>
 
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:background="@drawable/profile"
         android:layout_gravity="center_horizontal" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,13 +39,17 @@
         android:textStyle="bold"
         android:textSize="19dp"
         android:textColor="@color/Black"
-        android:layout_gravity="center_horizontal"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rate"
         android:layout_gravity="center_horizontal"
+        android:id="@+id/usrname" />
+
+    <RatingBar
+        android:id="@+id/rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/ratingBarStyleSmall"
+        android:numStars="5"
+        android:stepSize="0.1"
+        android:isIndicator="true"
         android:layout_marginBottom="15dp"/>
 
     <TextView
@@ -74,19 +80,6 @@
         android:id="@+id/email"
         android:text="Email" />
 
-    <TextView
-        android:text="Birthdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView16" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/birthdate"
-        android:text="birthdate" />
 
     <Button
         android:text="EDIT PROFILE"
@@ -105,5 +98,6 @@
         android:layout_margin="5dp"
         android:layout_gravity="center"
         android:background="@color/Blue" />
+
 
 </LinearLayout>
