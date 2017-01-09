@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.example.nuhakhayat.quizzy.NavDrawerMenu.NavDrawerItem;
 import com.example.nuhakhayat.quizzy.NavDrawerMenu.NavDrawerListAdapter;
 import com.example.nuhakhayat.quizzy.StudyRoom.AllStudyRoomsFragment;
+import com.example.nuhakhayat.quizzy.StudyRoom.SubStudyRoomsAFragment;
 import com.example.nuhakhayat.quizzy.User.Login;
 import com.example.nuhakhayat.quizzy.User.UserProfileFragment;
 
@@ -161,8 +162,10 @@ public class MainActivity extends AppCompatActivity {
 					fragmentToDisplay = new UserProfileFragment();
 					break;
 				case 1:
-				case 2:
 					fragmentToDisplay = new AllStudyRoomsFragment();
+					break;
+				case 2:
+					fragmentToDisplay = new SubStudyRoomsAFragment();
 					break;
 				case 3:
 					//Logout
