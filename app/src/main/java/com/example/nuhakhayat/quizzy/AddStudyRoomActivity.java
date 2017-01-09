@@ -47,6 +47,7 @@ public class AddStudyRoomActivity extends AppCompatActivity {
 		database = new Database(getApplicationContext());
 
 		UserId = UserName.Username;
+		roomName = courseName.getText().toString();
 
 		addRoombtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -58,7 +59,6 @@ public class AddStudyRoomActivity extends AppCompatActivity {
 					Toast.makeText(AddStudyRoomActivity.this, "Please enter the Course Name", Toast.LENGTH_LONG).show();
 					return;
 				}else {
-					Toast.makeText(AddStudyRoomActivity.this, "test", Toast.LENGTH_LONG).show();
 					addRoom(roomName);
 				}
 			}
@@ -71,7 +71,7 @@ public class AddStudyRoomActivity extends AppCompatActivity {
 		ArrayList<String> majors = new ArrayList<String>();
 
 		// check the checked CheckBoxes
-		/*if (major1.isChecked()){
+		if (major1.isChecked()){
 			String Maj1 = major1.getText().toString();
 			majors.add(Maj1);
 		}
@@ -90,16 +90,16 @@ public class AddStudyRoomActivity extends AppCompatActivity {
 		if (major5.isChecked()){
 			String Maj5 = major5.getText().toString();
 			majors.add(Maj5);
-		}*/
-		//database.test1("hi");
+		}
+
 		// Check if the Room already exist
 		boolean check = database.checkRoom(roomName);
-		Log.d("Check Value:", "check = :"+ check);
+		//Log.d("Check Value:", "check = :"+ check);
 		if ( check == true){
 			// Insert the room in Room Table
 			long sucAdd = database.insertRoom(roomName);
 			//String RoomId = database.getLastAddedRoom();
-			Log.d("majors size: ",majors.size()+"");
+			//Log.d("majors size: ",majors.size()+"");
 			database.insertMajors(roomName, majors);
 			database.insertSubRoom(UserId, roomName);
 			if ( sucAdd != -1){
@@ -120,7 +120,10 @@ public class AddStudyRoomActivity extends AppCompatActivity {
 		public void run() {
 			try {
 				Thread.sleep(3500); // As I am using LENGTH_LONG in Toast
-				startActivity(new Intent(AddStudyRoomActivity.this,StudyRoomActivity.class));
+				Intent intent = new Intent(AddStudyRoomActivity.this,StudyRoomActivity.class);
+				intent.putExtra("RoomID", roomName);
+				Log.d("the Intent:", roomName);
+				startActivity(intent);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
