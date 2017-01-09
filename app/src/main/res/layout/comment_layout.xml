@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/commentLayoutLinear">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Gray"
+        android:layout_margin="7dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UserName"
+            android:textSize="18dp"
+            android:id="@+id/username_comment_textView"
+            android:textColor="@color/Black"
+            android:padding="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Comment On The Discussion Or The Question Is Provided Here............."
+            android:textSize="18dp"
+            android:textColor="@color/Black"
+            android:id="@+id/comment_textView"
+            android:padding="10dp"
+            android:layout_below="@+id/username_comment_textView"
+            android:layout_alignParentStart="true"/>
+
+        <com.like.LikeButton
+            android:id="@+id/like_commet_button"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:icon_size="25dp"
+            app:like_drawable="@drawable/thumb_on"
+            app:unlike_drawable="@drawable/thumb_off"
+            android:layout_below="@+id/comment_textView"
+            android:layout_alignParentEnd="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/Gray"
+            android:id="@+id/comment_id_textView"
+            android:layout_below="@+id/comment_textView"
+            android:layout_alignParentStart="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

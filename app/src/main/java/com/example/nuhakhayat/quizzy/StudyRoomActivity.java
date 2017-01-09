@@ -11,6 +11,9 @@ import android.widget.ListView;
 import com.example.nuhakhayat.quizzy.Discussion.AddDiscussion;
 import com.example.nuhakhayat.quizzy.Discussion.DiscussionListAdapter;
 import com.example.nuhakhayat.quizzy.Discussion.DiscussionListListener;
+import com.example.nuhakhayat.quizzy.Quiz.AddQuizActivity;
+import com.example.nuhakhayat.quizzy.Quiz.QuizListAdapter;
+import com.example.nuhakhayat.quizzy.Quiz.QuizListListener;
 
 import java.util.List;
 
@@ -30,34 +33,34 @@ public class StudyRoomActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_study_room);
 
 		database = new Database(getApplicationContext());
-		//allQuizzes = dbHelper.getAllQuizzes();
+		allQuizzes = database.getAllQuizzes();
 		allDiscussions = database.getAllDiscussions();
 
 
 		quizListView = (ListView)findViewById(R.id.quizListView);
-		/*quizAdapter = new QuizDiscussionListAdapter(getApplicationContext(),R.layout.list_view_item,
+		quizAdapter = new QuizListAdapter(getApplicationContext(),R.layout.list_view_item_layout,
 				allQuizzes);
 		quizListView.setAdapter(quizAdapter);
 		quizListView.setOnItemClickListener(new QuizListListener
-				(StudyRoomActivity.this,allQuizzes));*/
+				(StudyRoomActivity.this,allQuizzes));
 
 		discussionListView = (ListView)findViewById(R.id.discussionListView);
 		discussionAdapter = new DiscussionListAdapter(getApplicationContext(),
-				R.layout.list_view_item,allDiscussions);
+				R.layout.list_view_item_layout,allDiscussions);
 
 		discussionListView.setAdapter(discussionAdapter);
 		discussionListView.setOnItemClickListener(new DiscussionListListener
 				(StudyRoomActivity.this,allDiscussions));
 
-		/*addQuiz = (ImageView)findViewById(R.id.addQuizImageView);
+		addQuiz = (ImageView)findViewById(R.id.addQuizImageView);
 		addQuiz.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(StudyRoomActivity.this,AddQuizActivity.class);
-				//Add Study room title to intent
+				intent.putExtra("RoomID","1");
 				startActivity(intent);
 			}
-		});*/
+		});
 
 		addDiscussion = (ImageView)findViewById(R.id.addDicussionImageView);
 		addDiscussion.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +72,8 @@ public class StudyRoomActivity extends AppCompatActivity {
 				startActivity(intent);
 			}
 		});
+
+
 
 	}
 }

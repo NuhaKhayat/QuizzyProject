@@ -41,11 +41,13 @@
     <EditText
         android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="text"
         android:textColor="@color/Gray"
-        android:text="Enter a Number"
+        android:hint="Enter a Course Name"
+        android:textAlignment="center"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:id="@+id/RoomName" />
 
     <TextView
         android:text="Course Majors:"
@@ -59,28 +61,42 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Related Majors"
+        android:text="Science"
         android:textColor="@android:color/darker_gray"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="50dp"
+        android:id="@+id/Ch1"/>
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Related Majors"
+        android:text="Engineering"
         android:textColor="@android:color/darker_gray"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="50dp"
+        android:id="@+id/Ch2"/>
+
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Related Majors"
+        android:text="Medical"
         android:textColor="@android:color/darker_gray"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="50dp"
+        android:id="@+id/Ch3"/>
+
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Related Majors"
+        android:text="Computer"
         android:textColor="@android:color/darker_gray"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="50dp"
+        android:id="@+id/Ch4"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Business"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginLeft="50dp"
+        android:id="@+id/Ch5"/>
 
     <Button
         android:layout_width="wrap_content"

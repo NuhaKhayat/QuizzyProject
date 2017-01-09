@@ -1,9 +1,11 @@
-package com.example.nuhakhayat.quizzy;
+package com.example.nuhakhayat.quizzy.Quiz;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+
+import com.example.nuhakhayat.quizzy.Quiz.QuizActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,19 +15,18 @@ import java.util.List;
  */
 public class QuizListListener implements AdapterView.OnItemClickListener{
 
-	List<ArrayList<String>> allItems;
+	List<String> allItems;
 	Activity activity;
 
-	public QuizListListener(Activity activity, List<ArrayList<String>> allItems) {
+	public QuizListListener(Activity activity, List<String> allItems) {
 		this.activity = activity;
 		this.allItems = allItems;
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		ArrayList<String> item = allItems.get(position);
 		Intent intent = new Intent(activity.getApplicationContext(),QuizActivity.class);
-		intent.putExtra("title",item.get(0));
+		intent.putExtra("title",allItems.get(0));
 		activity.startActivity(intent);
 	}
 }

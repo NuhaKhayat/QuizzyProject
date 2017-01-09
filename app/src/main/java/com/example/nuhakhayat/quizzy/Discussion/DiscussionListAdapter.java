@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import com.example.nuhakhayat.quizzy.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by NuhaKhayat on 1/2/17 AD.
+ * This class is used to set the view for the discussion item in list view
  */
 public class DiscussionListAdapter extends ArrayAdapter<String>{
 
@@ -26,19 +26,14 @@ public class DiscussionListAdapter extends ArrayAdapter<String>{
 	}
 
 
+	//This method is used to retrieve the item view and set the text
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Log.d("adapter","here2");
-		View view;
-		view = convertView;
-		if(view == null){
-			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = inflater.inflate(R.layout.list_view_item, null);
-			Log.d("adapter","here3");
-		}
+
+		LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.list_view_item_layout, null);
 
 		TextView title = (TextView)view.findViewById(R.id.quiz_discussion_title);
-		//TextView other = (TextView)view.findViewById(R.id.difficult_comment);
 
 		if(title != null){
 			title.setText(allListItem.get(position));
@@ -46,12 +41,6 @@ public class DiscussionListAdapter extends ArrayAdapter<String>{
 		}else{
 			Log.d("title","null");
 		}
-		/*if (other != null){
-			other.setText(quizDiscussion.get(1));
-			Log.d("other",quizDiscussion.get(1));
-		}else{
-			Log.d("other","null");
-		}*/
 		return view;
 	}
 }

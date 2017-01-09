@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nuhakhayat.quizzy">
+          package="com.example.nuhakhayat.quizzy">
 
     <application
         android:allowBackup="true"
@@ -8,22 +8,29 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".intro"
-            android:theme="@style/AppTheme.NoTitle">
+        <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".StudyRoomActivity"></activity>
-        <activity android:name=".QuizActivity"></activity>
-        <activity android:name=".Discussion.DiscussionActivity"></activity>
-        <activity android:name=".AddQuizActivity"></activity>
-        <activity android:name=".AddStudyRoomActivity"></activity>
-        <activity android:name=".EditProfileActivity"></activity>
-        <activity android:name=".Discussion.AddDiscussion"></activity>
+        <activity android:name=".StudyRoomActivity">
+        </activity>
+        <activity android:name=".QuizActivity">
+        </activity>
+        <activity android:name=".Discussion.DiscussionActivity">
+        </activity>
+        <activity android:name=".AddQuizActivity">
+        </activity>
+        <activity android:name=".SettingsActivity">
+        </activity>
+        <activity android:name=".AddStudyRoomActivity">
+        </activity>
+        <activity android:name=".EditProfileActivity">
+        </activity>
+        <activity android:name=".Discussion.AddDiscussion">
+        </activity>
     </application>
 
 </manifest>
