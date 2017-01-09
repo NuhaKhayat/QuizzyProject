@@ -22,7 +22,7 @@ public class UserProfileFragment extends Fragment {
 	EditText fullname,email;
 	Button editProfile, changePassword;
 	Database db;
-	BroadcastReceiver brUsername;
+	broadcastResever brUsername;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 	final View view = inflater.inflate(R.layout.fragment_user_profile,container,false);
@@ -39,8 +39,8 @@ public class UserProfileFragment extends Fragment {
 		int stars = (db.numOfLikes(1)/5);
 		rating.setRating(stars);
 
-		//userId=brUsername.Username;
-		//username.setText(userId);
+		String userId=brUsername.Username;
+		username.setText(userId);
 
 
 		changePassword.setOnClickListener(new View.OnClickListener() {
