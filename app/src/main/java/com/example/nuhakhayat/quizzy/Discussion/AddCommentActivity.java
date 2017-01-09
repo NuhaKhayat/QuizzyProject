@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.example.nuhakhayat.quizzy.Database;
 import com.example.nuhakhayat.quizzy.R;
-import com.like.LikeButton;
-import com.like.OnLikeListener;
 
 
 /**
@@ -72,7 +70,7 @@ public class AddCommentActivity extends AppCompatActivity {
 				}
 
 				//Add comment to database and check that comment is added
-				Long check = database.insertCommetn(UserComment,discussionTitle,"UserTest"); //add user name
+				Long check = database.insertcomment(UserComment,discussionTitle,"UserTest"); //add user name
 				if(check != -1){
 					Toast.makeText(getApplicationContext(),"Comment Added Successfully",Toast.LENGTH_SHORT)
 							.show();

@@ -30,8 +30,7 @@ public class Database extends SQLiteOpenHelper {
     static final String DISCUSSION_TABLE = "Discussion_Table";
     static final String QUESTION_TABLE = "Question_Table";
     static final String COMMENTS_TABLE = "Comments_Table";
-    //This table is from the many-to-many relationship between Quiz & StudyRoom tables
-    static final String STUDY_ROOM_QUIZ_TABLE = "StudyRoom_Quiz_Table";
+
 
     static final int VersionN = 1;
 
@@ -85,9 +84,6 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_FK_USERNAME_COMMENT = "FK_username";
     public static final String COLUMN_FK_DISCUSSION_NAME_COMMENT = "FK_discussionName";
 
-    // Studies_Quizzes Table columns
-    public static final String COLUMN_FK_QUIZ_ROOM_ID = "FK_RoomID";
-    public static final String COLUMN_FK_ROOM_QUIZ_ID = "FK_RoomQuizID";
 
     // Queries for creating the tables with their columns
     final String DB_userCREATE="CREATE TABLE "+ USER_TABLE +" ("
@@ -97,28 +93,30 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_STARS_NUM +" INTEGER)";
 
     final String DB_roomCREATE="CREATE TABLE "+ STUDY_ROOM_TABLE +" ("
-            + COLUMN_COURSE +" text primary key)";
+            + COLUMN_COURSE +" TEXT PRIMARY KEY)";
 
-    final String DB_majorCREATE="CREATE TABLE "+ MAJORS_TABLE +" ("+ COLUMN_FK_ROOM_MAJOR +" text,"
-            + COLUMN_MAJORS +" text not null)";
+    final String DB_majorCREATE="CREATE TABLE "+ MAJORS_TABLE +" ("
+			+ COLUMN_FK_ROOM_MAJOR +" TEXT, "
+            + COLUMN_MAJORS +" TEXT NOT NULL)";
 
-    final String DB_subscribedRoomCREATE = "CREATE TABLE "+ SUB_ROOM_TABLE +" ("+ COLUMN_FK_USERid_ROOM +" text,"
-            + COLUMN_FK_ROOMid_USER +" text)";
+    final String DB_subscribedRoomCREATE = "CREATE TABLE "+ SUB_ROOM_TABLE +" ("
+			+ COLUMN_FK_USERid_ROOM +" TEXT, "
+            + COLUMN_FK_ROOMid_USER +" TEXT)";
 
-    final String DB_discussionCREATE = "CREATE TABLE " + DISCUSSION_TABLE + "(" +
-            COLUMN_DISCUSSION_NAME + " VARCHAR(100) PRIMARY KEY, "+
-            COLUMN_DISCUSSION_DESCRIPTION + " TEXT, "+
-            FK_ROOM_DISCUS_ID+ " VARCHAR(10))";
+    final String DB_discussionCREATE = "CREATE TABLE " + DISCUSSION_TABLE + " ("
+			+ COLUMN_DISCUSSION_NAME + " VARCHAR(100) PRIMARY KEY, "
+			+ COLUMN_DISCUSSION_DESCRIPTION + " TEXT, "
+			+ FK_ROOM_DISCUS_ID+ " VARCHAR(10))";
 
-	final String DB_commentsCREATE = "CREATE TABLE "+ COMMENTS_TABLE +"("
+	final String DB_commentsCREATE = "CREATE TABLE "+ COMMENTS_TABLE +" ("
 			+ COLUMN_PK_COMMENT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
 			+ COLUMN_COMMENT +" TEXT, "
 			+ COLUMN_COMMENT_LIKED + " INTEGER, "
 			+ COLUMN_FK_DISCUSSION_NAME_COMMENT + " VARCHAR(100), "
 			+ COLUMN_FK_USERNAME_COMMENT + " VARCHAR(50))";
 
-	final String DB_quizCREATE="CREATE TABLE "+ QUIZ_TABLE + "("
-			+ COLUMN_PK_QUIZ_ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"
+	final String DB_quizCREATE="CREATE TABLE "+ QUIZ_TABLE + " ("
+			+ COLUMN_PK_QUIZ_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
 			+ COLUMN_QUIZ_TITLE+ " VARCHAR(100), "
 			+ COLUMN_QUIZ_Q_NUM+ " INTEGER, "
 			+ COLUMN_FK_ROOM_QUIZ + " VARCHAR(10))";
@@ -135,15 +133,6 @@ public class Database extends SQLiteOpenHelper {
 
 
 
-
-/*
-
-
-
-    final String DB_roomQuizesCREATE="CREATE TABLE "+ STUDY_ROOM_QUIZ_TABLE +" ("
-            + COLUMN_FK_QUIZ_ROOM_ID +" integer primary key,"
-            + COLUMN_FK_ROOM_QUIZ_ID + " integer primary key)";*/
-
     public Database(Context context) {
         super(context, DATABASE_NAME, null, VersionN);
     }
@@ -151,13 +140,11 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Execute the queries to create the tables
-//        db.execSQL(DB_roomCREATE);
+        db.execSQL(DB_roomCREATE);
         db.execSQL(DB_userCREATE);
         db.execSQL(DB_roomCREATE);
         db.execSQL(DB_discussionCREATE);
-		  Log.d("Database",DB_discussionCREATE);
         db.execSQL(DB_quizCREATE);
-        db.execSQL(DB_roomQuizesCREATE);
         db.execSQL(DB_questionCREATE);
         db.execSQL(DB_commentsCREATE);
         db.execSQL(DB_majorCREATE);
@@ -170,7 +157,6 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXIST" + STUDY_ROOM_TABLE);
         db.execSQL("DROP TABLE IF EXIST" + DISCUSSION_TABLE);
         db.execSQL("DROP TABLE IF EXIST" + QUIZ_TABLE);
-        db.execSQL("DROP TABLE IF EXIST" + STUDY_ROOM_QUIZ_TABLE);
         db.execSQL("DROP TABLE IF EXIST" + QUESTION_TABLE);
         db.execSQL("DROP TABLE IF EXIST" + COMMENTS_TABLE);
         db.execSQL("DROP TABLE IF EXIST" + MAJORS_TABLE);
@@ -187,19 +173,17 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(FK_ROOM_DISCUS_ID, roomId);
         return db.insert(DISCUSSION_TABLE, null, contentValues);
     }
-    public int numOfLikes(int likes)
-    {
+
+    public int numOfLikes(int likes) {
         SQLiteDatabase db = this.getReadableDatabase();
         db.rawQuery("SELECT * FROM " + COMMENTS_TABLE + " WHERE "
-                + COLUMN_LIKES_NUM + " = '" + 1 + "'", null);
+                + COLUMN_COMMENT_LIKED + " = '" + 1 + "'", null);
 
         return likes;
-
     }
 
 	public Cursor getDiscussion(String name) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		Log.d("getDiscussion","SELECT * FROM " + DISCUSSION_TABLE +" WHERE " + COLUMN_DISCUSSION_NAME +" = '"+ name +"'");
 		return db.rawQuery( "SELECT * FROM " + DISCUSSION_TABLE +" WHERE "
 				+ COLUMN_DISCUSSION_NAME +" = '"+ name +"'", null);
 	}
@@ -218,14 +202,12 @@ public class Database extends SQLiteOpenHelper {
 
 	public Cursor getComments(String discussionName){
 		SQLiteDatabase db = this.getReadableDatabase();
-		Log.d("getComments","SELECT * FROM " + COMMENTS_TABLE + " WHERE "
-				+ COLUMN_FK_DISCUSSION_NAME_COMMENT + " ='" + discussionName +"'");
 		Cursor cursor =  db.rawQuery( "SELECT * FROM " + COMMENTS_TABLE + " WHERE "
 				+ COLUMN_FK_DISCUSSION_NAME_COMMENT + " ='" + discussionName +"'", null );
 		return cursor;
 	}
 
-	public long insertCommetn(String comment, String discussionName, String username){
+	public long insertcomment(String comment, String discussionName, String username){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(COLUMN_COMMENT, comment);
@@ -265,8 +247,8 @@ public class Database extends SQLiteOpenHelper {
 
     public boolean login (String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String Query = "SELECT * FROM "+USER_TABLE+" WHERE "+COLUMN_PK_USERNAME+" = '"+username+"' AND "+
-                COLUMN_PASSWORD+" = '"+password+"'";
+        String Query = "SELECT * FROM "+USER_TABLE+" WHERE "+COLUMN_PK_USERNAME+" = '"+username
+				+"' AND "+ COLUMN_PASSWORD+" = '"+password+"'";
         Cursor cursor = db.rawQuery(Query, null);
         if(cursor.getCount() == 1){
             cursor.close();
@@ -280,8 +262,6 @@ public class Database extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		ContentValues cv = new ContentValues();
 		cv.put(COLUMN_PASSWORD,password);
-		//String selection = COLUMN_PK_USERNAME+" = ?";
-		//String[] selectionArgs = { String.valueOf(username) };
 		int count = db.update(USER_TABLE, cv,COLUMN_PK_USERNAME+"="+username, null);
 		return count;
 	}
@@ -392,10 +372,11 @@ public class Database extends SQLiteOpenHelper {
 		return db.rawQuery( "SELECT * FROM " + QUESTION_TABLE +" WHERE "
 				+ COLUMN_FK_QUIZ_NAME +" = '"+ QuizName +"'", null);
 	}
-}
+
     public String getLastAddedRoom(String roomName){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM "+ STUDY_ROOM_TABLE +" ORDER BY "+ COLUMN_COURSE +" DESC LIMIT 1", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ STUDY_ROOM_TABLE +" ORDER BY "+ COLUMN_COURSE
+				+" DESC LIMIT 1", null);
         return cursor.getString(0);
     }
 
@@ -406,8 +387,6 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(COLUMN_FK_ROOMid_USER, RoomName);
         return db.insert(SUB_ROOM_TABLE, null, contentValues);
     }
-
-
 
 }
 
