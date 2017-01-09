@@ -23,6 +23,7 @@ public class Database extends SQLiteOpenHelper {
     static final String USER_TABLE = "User_Table";
     static final String STUDY_ROOM_TABLE = "StudyRoom_Table";
     static final String MAJORS_TABLE = "Majors_Table";
+	static final String SUB_ROOM_TABLE = "subRoom_Table";
     static final String QUIZ_TABLE = "Quiz_Table";
     static final String DISCUSSION_TABLE = "Discussion_Table";
     static final String QUESTION_TABLE = "Question_Table";
@@ -33,7 +34,7 @@ public class Database extends SQLiteOpenHelper {
     static final int VersionN = 1;
 
     //Study Room Table columns
-    public static final String COLUMN_PK_ROOM_ID = "PK_RoomID";
+    //public static final String COLUMN_PK_ROOM_ID = "PK_RoomID";
     public static final String COLUMN_COURSE = "Course";
     //public static final String Fk_createdBy = "FK_createdBy";
 
@@ -41,7 +42,11 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_FK_ROOM_MAJOR = "FK_RoomID";
     public static final String COLUMN_MAJORS = "Majors";
 
-    //User Table columns
+	//User Subscribed Rooms Table columns
+	public static final String COLUMN_FK_USERid_ROOM = "Fk_userName";
+	public static final String COLUMN_FK_ROOMid_USER = "Fk_subRoomID";
+
+	//User Table columns
     public static final String COLUMN_PK_USERNAME = "PK_Username";
     public static final String COLUMN_EMAIL = "Email";
     public static final String COLUMN_PASSWORD = "Password";
@@ -88,15 +93,16 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_PASSWORD +" text not null,"
             + COLUMN_STARS_NUM +" integer)";
 
-    final String DB_roomCREATE="CREATE TABLE "+ STUDY_ROOM_TABLE +" ("
-            + COLUMN_PK_ROOM_ID +" integer primary key autoincrement,"
-            + COLUMN_COURSE +" text not null)";
+	final String DB_roomCREATE="CREATE TABLE "+ STUDY_ROOM_TABLE +" ("
+			+ COLUMN_COURSE +" text primary key)";
 
-    final String DB_majorCREATE="CREATE TABLE "+ MAJORS_TABLE +" ("+ COLUMN_FK_ROOM_MAJOR +" integer,"
-            + COLUMN_MAJORS +" text not null)";
+	final String DB_majorCREATE="CREATE TABLE "+ MAJORS_TABLE +" ("+ COLUMN_FK_ROOM_MAJOR +" text,"
+			+ COLUMN_MAJORS +" text not null)";
 
+	final String DB_subscribedRoomCREATE = "CREATE TABLE "+ SUB_ROOM_TABLE +" ("+ COLUMN_FK_USERid_ROOM +" text,"
+			+ COLUMN_FK_ROOMid_USER +" text)";
 
-    final String DB_discussionCREATE = "CREATE TABLE " + DISCUSSION_TABLE + "("
+	final String DB_discussionCREATE = "CREATE TABLE " + DISCUSSION_TABLE + "("
 			+ COLUMN_DISCUSSION_NAME + " VARCHAR(100) PRIMARY KEY, "
 			+ COLUMN_DISCUSSION_DESCRIPTION + " TEXT, "
 			+ FK_ROOM_DISCUS_ID+ " VARCHAR(10))";
@@ -142,15 +148,16 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Execute the queries to create the tables
-//        db.execSQL(DB_userCREATE);
-//        db.execSQL(DB_roomCREATE);
+        db.execSQL(DB_userCREATE);
+        db.execSQL(DB_roomCREATE);
         db.execSQL(DB_discussionCREATE);
 		db.execSQL(DB_commentsCREATE);
 		db.execSQL(DB_quizCREATE);
 		db.execSQL(DB_questionCREATE);
 //        db.execSQL(DB_roomQuizesCREATE);
 //        db.execSQL(DB_commentsCREATE);
-//        db.execSQL(DB_majorCREATE);
+        db.execSQL(DB_majorCREATE);
+		db.execSQL(DB_subscribedRoomCREATE);
     }
 
     @Override
@@ -163,6 +170,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXIST"+ QUESTION_TABLE);
         db.execSQL("DROP TABLE IF EXIST"+ COMMENTS_TABLE);
         db.execSQL("DROP TABLE IF EXIST"+ MAJORS_TABLE);
+		db.execSQL("DROP TABLE IF EXIST"+ SUB_ROOM_TABLE);
         onCreate(db);
     }
 
@@ -304,5 +312,69 @@ public class Database extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(Query, null);
         return cursor;
     }
+
+	public long insertRoom(String courseName){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(COLUMN_COURSE, courseName);
+		return db.insert(STUDY_ROOM_TABLE, null, contentValues);
+	}
+
+	public void insertMajors(String RoomID, ArrayList<String> majors){
+		if ( !(majors.size() == 0)){
+			SQLiteDatabase db = this.getWritableDatabase();
+			ContentValues contentValues = new ContentValues();
+			int length = majors.size();
+			for (int i=0 ; i<length ; i++){
+				contentValues.put(COLUMN_FK_ROOM_MAJOR, RoomID);
+				contentValues.put(COLUMN_MAJORS, majors.get(i));
+				db.insert(MAJORS_TABLE, null, contentValues);
+			}
+		}
+	}
+
+	public boolean checkRoom (String Course) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		String Query = "SELECT * FROM "+STUDY_ROOM_TABLE+" WHERE "+COLUMN_COURSE+" = '"+Course+"'";
+		Log.d("Query",Query);
+		Cursor cursor = db.rawQuery(Query, null);
+		if(cursor.getCount() == 0){
+			cursor.close();
+			return true;
+		}
+		cursor.close();
+		return false;
+	}
+
+	public void test1(String test) {
+		Log.d("Query: ",test);
+	}
+
+	public List<String> getSubscribedRoom(String username){
+		List<String> subRoom = new ArrayList<>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor =  db.rawQuery( "SELECT * FROM " + SUB_ROOM_TABLE
+				+ " WHERE " + COLUMN_FK_USERid_ROOM + "= '" + username + "'", null );
+		cursor.moveToFirst();
+		while(cursor.isAfterLast() == false){
+			subRoom.add(cursor.getString(cursor.getColumnIndex(COLUMN_FK_ROOMid_USER)));
+			cursor.moveToNext();
+		}
+		return subRoom;
+	}
+
+	public String getLastAddedRoom(String roomName){
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM "+ STUDY_ROOM_TABLE +" ORDER BY "+ COLUMN_COURSE +" DESC LIMIT 1", null);
+		return cursor.getString(0);
+	}
+
+	public long insertSubRoom(String username, String RoomName){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(COLUMN_FK_USERid_ROOM, username);
+		contentValues.put(COLUMN_FK_ROOMid_USER, RoomName);
+		return db.insert(SUB_ROOM_TABLE, null, contentValues);
+	}
 
 }
