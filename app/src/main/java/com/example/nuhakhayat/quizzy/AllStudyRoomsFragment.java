@@ -12,16 +12,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.util.List;
+
 public class AllStudyRoomsFragment extends Fragment {
 	View view;
+	Database db ;
 	@Nullable
 	@Override
+
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.fragment_all_study_rooms,container,false);
 		ListView listView = (ListView)view.findViewById(R.id.listViewall);
 
-		String [] ListOfQuizzes = getResources().getStringArray(R.array.listOfRooms);
-		listView.setAdapter(new ArrayAdapter(view.getContext(),android.R.layout.simple_list_item_1, ListOfQuizzes));
+
+		final List<String> courseList=db.getAllCourses();
+
+		listView.setAdapter(new ArrayAdapter(view.getContext(),android.R.layout.simple_list_item_1, courseList));
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -39,3 +45,5 @@ public class AllStudyRoomsFragment extends Fragment {
 	}
 
 }
+
+

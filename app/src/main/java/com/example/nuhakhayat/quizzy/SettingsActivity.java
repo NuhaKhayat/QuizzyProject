@@ -13,10 +13,17 @@ public class SettingsActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		Button button = (Button)findViewById(R.id.buttonup);
+		Button logout =(Button)findViewById(R.id.logout);
 		button.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						startActivity(new Intent(SettingsActivity.this,EditProfileActivity.class));
+			}
+		});
+		logout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(SettingsActivity.this,EditProfileActivity.class));
+				startActivity(new Intent(SettingsActivity.this, MainActivity.class));
 			}
 		});
 	}
