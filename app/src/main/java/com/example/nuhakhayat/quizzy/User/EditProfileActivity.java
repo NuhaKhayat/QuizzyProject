@@ -19,6 +19,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	EditText edittxt1, edittxt2;
 	Database db;
 	broadcastResever brUsername;
+	String userId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +27,12 @@ public class EditProfileActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_edit_profile);
 
 		db = new Database(getApplicationContext());
-		change = (Button) findViewById(R.id.changepass);
+		change = (Button) findViewById(R.id.changePass);
 		edittxt1 = (EditText) findViewById(R.id.editPass);
 		edittxt2 = (EditText) findViewById(R.id.conPass);
 
-		final String userId=brUsername.Username;
+		userId=brUsername.Username;
+
 
 
 

@@ -40,9 +40,11 @@ public class UserProfileFragment extends Fragment {
 		editProfile =(Button)view.findViewById(R.id.editProfile);
 		changePassword = (Button)view.findViewById(R.id.changepass);
 
+		//rating
 		int stars = (db.numOfLikes(1)/5);
 		rating.setRating(stars);
 
+		//username
 		String userId=brUsername.Username;
 		username.setText(userId);
 
