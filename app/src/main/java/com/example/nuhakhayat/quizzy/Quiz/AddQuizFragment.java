@@ -20,17 +20,20 @@ import com.example.nuhakhayat.quizzy.R;
  */
 public class AddQuizFragment extends Fragment {
 
+	String TAG = "AddQuizFragment";
 	int qestionCount = 2;
 	RadioGroup qestionNumGroup;
 	RadioButton qestionNumRB;
 	EditText titleET;
 	Communicator communicator;
+	View view;
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_add_quiz, null, false);
+		Log.d(TAG,"onCreateView");
+		view = inflater.inflate(R.layout.fragment_add_quiz, null, false);
 
 		titleET = (EditText)view.findViewById(R.id.quiz_title_editText);
 
@@ -42,9 +45,9 @@ public class AddQuizFragment extends Fragment {
 				int selectedRBid = qestionNumGroup.getCheckedRadioButtonId();
 				qestionNumRB = (RadioButton)view.findViewById(selectedRBid);
 				qestionCount = Integer.parseInt(qestionNumRB.getText().toString());
-				Log.d("selectedRB", qestionNumRB.getText().toString());
 			}
 		});
+
 		return view;
 	}
 
@@ -54,13 +57,15 @@ public class AddQuizFragment extends Fragment {
 		super.onAttach(activity);
 		try {
 			communicator = (Communicator) activity;
+			Log.d(TAG,"onAttach");
 		}catch (Exception e){
-			Log.d("QuestionFragment",e.getMessage());
+			Log.d(TAG,e.getMessage());
 
 		}
 	}
 
 	public boolean getData(){
+		Log.d(TAG,"getData");
 		String title = titleET.getText().toString();
 		if(title.isEmpty()){
 			Toast.makeText(getActivity().getApplicationContext(),"Enter quiz title",
@@ -70,5 +75,6 @@ public class AddQuizFragment extends Fragment {
 		communicator.onQuizAdd(title,qestionCount);
 		return true;
 	}
+
 
 }

@@ -68,7 +68,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_ANSWER_3 = "Answer3";
 	public static final String COLUMN_ANSWER_4 = "Answer4";
     public static final String COLUMN_CORRECT_ANSWER_POSITION = "CorrectAnswerPos";
-    public static final String COLUMN_FK_QUIZ_ID = "FK_QuizID";
+    public static final String COLUMN_FK_QUIZ_NAME = "FK_QuizName";
 
     //Comments Table columns
     public static final String COLUMN_PK_COMMENT_ID = "commentID";
@@ -83,17 +83,17 @@ public class Database extends SQLiteOpenHelper {
 
     // Queries for creating the tables with their columns
     final String DB_userCREATE="CREATE TABLE "+ USER_TABLE +" ("
-            + COLUMN_PK_USERNAME +" text primary key,"
-            + COLUMN_EMAIL +" text not null,"
-            + COLUMN_PASSWORD +" text not null,"
-            + COLUMN_STARS_NUM +" integer)";
+            + COLUMN_PK_USERNAME +" TEXT PRIMARY KEY, "
+            + COLUMN_EMAIL +" TEXT NOT NULL, "
+            + COLUMN_PASSWORD +" TEXT NOT NULL, "
+            + COLUMN_STARS_NUM +" INTEGER)";
 
     final String DB_roomCREATE="CREATE TABLE "+ STUDY_ROOM_TABLE +" ("
-            + COLUMN_PK_ROOM_ID +" integer primary key autoincrement,"
+            + COLUMN_PK_ROOM_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_COURSE +" text not null)";
 
     final String DB_majorCREATE="CREATE TABLE "+ MAJORS_TABLE +" ("+ COLUMN_FK_ROOM_MAJOR +" integer,"
-            + COLUMN_MAJORS +" text not null)";
+            + COLUMN_MAJORS +" TEXT NOT NULL)";
 
 
     final String DB_discussionCREATE = "CREATE TABLE " + DISCUSSION_TABLE + "("
@@ -122,14 +122,12 @@ public class Database extends SQLiteOpenHelper {
 			+ COLUMN_ANSWER_3+ " TEXT, "
 			+ COLUMN_ANSWER_4+ " TEXT, "
 			+ COLUMN_CORRECT_ANSWER_POSITION + " INTEGER, "
-			+ COLUMN_FK_QUIZ_ID + " INTEGER)";
+			+ COLUMN_FK_QUIZ_NAME + " VARCHAR(100))";
 
 
 
 
 /*
-
-
 
     final String DB_roomQuizesCREATE="CREATE TABLE "+ STUDY_ROOM_QUIZ_TABLE +" ("
             + COLUMN_FK_QUIZ_ROOM_ID +" integer primary key,"
@@ -142,7 +140,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Execute the queries to create the tables
-//        db.execSQL(DB_userCREATE);
+        db.execSQL(DB_userCREATE);
 //        db.execSQL(DB_roomCREATE);
         db.execSQL(DB_discussionCREATE);
 		db.execSQL(DB_commentsCREATE);
@@ -221,49 +219,6 @@ public class Database extends SQLiteOpenHelper {
 		return db.update(COMMENTS_TABLE,contentValues,COLUMN_PK_COMMENT_ID +" = '"+id+"'",null);
 	}
 
-
-	public long insertQuiz(String title, int numOfQ, String roomId){
-		SQLiteDatabase db = this.getWritableDatabase();
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(COLUMN_QUIZ_TITLE,title);
-		contentValues.put(COLUMN_QUIZ_Q_NUM,numOfQ);
-		contentValues.put(COLUMN_FK_ROOM_QUIZ,roomId);
-		return db.insert(QUIZ_TABLE, null, contentValues);
-	}
-
-
-	public Cursor getQuiz(String name) {
-		SQLiteDatabase db = this.getReadableDatabase();
-		return db.rawQuery( "SELECT * FROM " + QUIZ_TABLE +" WHERE "
-				+ COLUMN_QUIZ_TITLE +" = '"+ name +"'", null);
-	}
-
-	public List<String> getAllQuizzes() {
-		List<String> quiz = new ArrayList<>();
-		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor =  db.rawQuery( "SELECT * FROM " + QUIZ_TABLE, null);
-		cursor.moveToFirst();
-		while(cursor.isAfterLast() == false){
-			quiz.add(cursor.getString(cursor.getColumnIndex(COLUMN_QUIZ_TITLE)));
-			cursor.moveToNext();
-		}
-		return quiz;
-	}
-
-	public long insertQuestion(String question, String ans1, String ans2, String ans3, String ans4,
-							   int pos, int quizId){
-		SQLiteDatabase db = this.getWritableDatabase();
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(COLUMN_QUESTION, question);
-		contentValues.put(COLUMN_ANSWER_1,ans1);
-		contentValues.put(COLUMN_ANSWER_2,ans2);
-		contentValues.put(COLUMN_ANSWER_3,ans3);
-		contentValues.put(COLUMN_ANSWER_4,ans4);
-		contentValues.put(COLUMN_CORRECT_ANSWER_POSITION, pos);
-		contentValues.put(COLUMN_FK_QUIZ_ID,quizId);
-		return db.insert(QUESTION_TABLE, null, contentValues);
-	}
-
     public boolean checkUsername (String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         String Query = "SELECT * FROM "+USER_TABLE+" WHERE "+COLUMN_PK_USERNAME+" = '"+username+"'";
@@ -305,4 +260,53 @@ public class Database extends SQLiteOpenHelper {
         return cursor;
     }
 
+
+	public long insertQuiz(String title, int numOfQ, String roomId){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(COLUMN_QUIZ_TITLE,title);
+		contentValues.put(COLUMN_QUIZ_Q_NUM,numOfQ);
+		contentValues.put(COLUMN_FK_ROOM_QUIZ,roomId);
+		return db.insert(QUIZ_TABLE, null, contentValues);
+	}
+
+
+	public Cursor getQuiz(String name) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		return db.rawQuery( "SELECT * FROM " + QUIZ_TABLE +" WHERE "
+				+ COLUMN_QUIZ_TITLE +" = '"+ name +"'", null);
+	}
+
+	public List<String> getAllQuizzes() {
+		List<String> quiz = new ArrayList<>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor =  db.rawQuery( "SELECT * FROM " + QUIZ_TABLE, null);
+		cursor.moveToFirst();
+		while(cursor.isAfterLast() == false){
+			quiz.add(cursor.getString(cursor.getColumnIndex(COLUMN_QUIZ_TITLE)));
+			cursor.moveToNext();
+		}
+		return quiz;
+	}
+
+	public long insertQuestion(String question, String ans1, String ans2, String ans3, String ans4,
+							   int pos, String quizName){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(COLUMN_QUESTION, question);
+		contentValues.put(COLUMN_ANSWER_1,ans1);
+		contentValues.put(COLUMN_ANSWER_2,ans2);
+		contentValues.put(COLUMN_ANSWER_3,ans3);
+		contentValues.put(COLUMN_ANSWER_4,ans4);
+		contentValues.put(COLUMN_CORRECT_ANSWER_POSITION, pos);
+		contentValues.put(COLUMN_FK_QUIZ_NAME,quizName);
+		Log.d("insertQuestion",question + " / " + ans1+ " / " +ans2+ " / " +ans3+ " / " +ans4+ " / " +pos+ " / " +quizName);
+		return db.insert(QUESTION_TABLE, null, contentValues);
+	}
+
+	public Cursor getQuestions(String QuizName){
+		SQLiteDatabase db = this.getReadableDatabase();
+		return db.rawQuery( "SELECT * FROM " + QUESTION_TABLE +" WHERE "
+				+ COLUMN_FK_QUIZ_NAME +" = '"+ QuizName +"'", null);
+	}
 }

@@ -22,10 +22,12 @@ public class AddQuizActivity extends AppCompatActivity implements Communicator{
 
 	int qestionCount;
 	Button next;
-	QuestionFragment questionFragment;
+	AddQuestionFragment questionFragment;
 	AddQuizFragment addQuizFragment;
 	Database database;
 	int clickNum;
+	String qtitle;
+	String TAG = "AddQuizActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,35 +46,37 @@ public class AddQuizActivity extends AppCompatActivity implements Communicator{
 			@Override
 			public void onClick(View v) {
 				if(clickNum == 0){
-					Log.d("clickNum1", String.valueOf(clickNum));
+					Log.d(TAG,"clickNum == 0");
 					addQuizFragment = (AddQuizFragment) getFragmentManager()
 							.findFragmentById(R.id.fragmentContainer);
 
 					if(addQuizFragment.getData()){
 						getFragmentManager().beginTransaction()
 								.setCustomAnimations(R.animator.slide_left_right,R.animator.slide_right_left)
-								.replace(R.id.fragmentContainer, new QuestionFragment())
 								.show(addQuizFragment)
+								.remove(addQuizFragment)
+								.add(R.id.fragmentContainer, new AddQuestionFragment())
 								.commit();
 						clickNum++;
 					}
 				}else{
-					if(clickNum < qestionCount){
-						Log.d("qestionCountClick", String.valueOf(qestionCount));
-						Log.d("clickNum2", String.valueOf(clickNum));
-						questionFragment = (QuestionFragment) getFragmentManager()
+					if(clickNum <= qestionCount){
+						Log.d(TAG,"clickNum < qestionCount");
+						questionFragment = (AddQuestionFragment) getFragmentManager()
 								.findFragmentById(R.id.fragmentContainer);
 
 						if(questionFragment.getData()){
 							getFragmentManager().beginTransaction()
 									.setCustomAnimations(R.animator.slide_left_right,R.animator.slide_right_left)
-									.replace(R.id.fragmentContainer, new QuestionFragment())
 									.show(questionFragment)
+									.remove(questionFragment)
+									.add(R.id.fragmentContainer, new AddQuestionFragment())
 									.commit();
 							clickNum++;
 						}
-					}else{
-						showToast("Quiz and Question Added Successfully");
+						if (clickNum > qestionCount){
+							showToast("Quiz and Question Added Successfully");
+						}
 					}
 				}
 			}
@@ -82,7 +86,7 @@ public class AddQuizActivity extends AppCompatActivity implements Communicator{
 	@Override
 	public void onQuestionAdd(String q, String a1, String a2, String a3, String a4, int pos) {
 		//Add to database and check the the addition has been preformed
-		long check = database.insertQuestion(q,a1,a2,a3,a4,pos,1);
+		long check = database.insertQuestion(q,a1,a2,a3,a4,pos,qtitle);
 		if(check != -1){
 
 		}else{
@@ -97,15 +101,13 @@ public class AddQuizActivity extends AppCompatActivity implements Communicator{
 		//Add to database and check the the addition has been preformed
 		long check = database.insertQuiz(title, numOfq, "1"); //add room id
 		if(check != -1){
-
+			qtitle = title;
 		}else{
 			Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_LONG)
 					.show();
 		}
 		qestionCount = numOfq;
-		Log.d("qestionCount", String.valueOf(qestionCount));
 	}
-
 
 	//This method is used to show customized toast message
 	public void showToast(String message){
@@ -146,4 +148,11 @@ public class AddQuizActivity extends AppCompatActivity implements Communicator{
 			}
 		}
 	};
+
+
+	@Override
+	public void onQuizFinish(int numOfq, int score) {
+
+	}
 }
+
