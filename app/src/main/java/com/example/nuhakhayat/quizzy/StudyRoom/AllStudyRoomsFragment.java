@@ -24,6 +24,7 @@ public class AllStudyRoomsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		db=new Database(getActivity().getApplicationContext());
+
 		view = inflater.inflate(R.layout.fragment_all_study_rooms,container,false);
 		ListView listView = (ListView)view.findViewById(R.id.listViewall);
 
