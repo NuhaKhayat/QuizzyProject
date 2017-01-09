@@ -15,7 +15,7 @@ public class EditProfileActivity extends AppCompatActivity {
 	Button change;
 	EditText edittxt1, edittxt2;
 	Database db;
-
+	broadcastResever brUsername;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,9 @@ public class EditProfileActivity extends AppCompatActivity {
 		edittxt1 = (EditText) findViewById(R.id.editPass);
 		edittxt2 = (EditText) findViewById(R.id.conPass);
 
+		final String userId=brUsername.Username;
+
+
 
 		change.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -34,7 +37,7 @@ public class EditProfileActivity extends AppCompatActivity {
 				if (!edittxt1.getText().toString().isEmpty() && !edittxt2.getText().toString().isEmpty()&&
 						(edittxt1.getText().toString().equals(edittxt2.getText().toString()) ))
 				{
-					//db.changePass(username.getText().toString(),edittxt1.getText().toString());
+					db.changePass(userId,edittxt1.getText().toString());
 					db.close();
 					Toast.makeText(getApplicationContext(), "The password is changed successfully ", Toast.LENGTH_LONG).show();
 				} else if  (!edittxt1.getText().toString().equals(edittxt2.getText().toString() )) {
