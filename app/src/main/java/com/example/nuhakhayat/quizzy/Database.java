@@ -261,7 +261,7 @@ public class Database extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		ContentValues cv = new ContentValues();
 		cv.put(COLUMN_PASSWORD,password);
-		int count = db.update(USER_TABLE, cv,COLUMN_PK_USERNAME+"="+username, null);
+		int count = db.update(USER_TABLE, cv,COLUMN_PK_USERNAME+" = ?", new String[] {username});
 		return count;
 	}
 
@@ -298,9 +298,6 @@ public class Database extends SQLiteOpenHelper {
 		return false;
 	}
 
-	public void test1(String test) {
-		Log.d("Query: ",test);
-	}
 
 	public List<String> getSubscribedRoom(String username){
 		List<String> subRoom = new ArrayList<>();

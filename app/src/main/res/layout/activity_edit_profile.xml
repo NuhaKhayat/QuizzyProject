@@ -37,10 +37,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="@color/Gray"
-        android:text="New PasswordHere"
+        android:hint="New PasswordHere"
         android:id="@+id/editPass" />
     <TextView
-        android:text="Repet New Password:"
+        android:text="Repeat New Password:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp"
@@ -53,7 +53,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="@color/Gray"
-        android:text="New Password Repet Here"
+        android:hint="New Password Repet Here"
         android:id="@+id/conPass" />
 
 

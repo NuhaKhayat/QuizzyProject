@@ -53,20 +53,6 @@
         android:layout_marginBottom="15dp"/>
 
     <TextView
-        android:text="Fullname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/name" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:id="@+id/fullname" />
-
-    <TextView
         android:text="Email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,7 +64,7 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/email"
-        android:text="Email" />
+        android:hint="Email" />
 
 
     <Button
@@ -95,6 +81,15 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/changePass"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:background="@color/Blue" />
+
+    <Button
+        android:text="INVITE FRIENDS"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/inviteBtn"
         android:layout_margin="5dp"
         android:layout_gravity="center"
         android:background="@color/Blue" />

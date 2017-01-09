@@ -1,59 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nuhakhayat.quizzy">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <receiver android:name=".broadcastResever">
             <intent-filter>
                 <action android:name="com.example.nuhakhayat.quizzy" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".WelcomeScreen"
-                  android:theme="@style/AppTheme.NoTitle">
+        <activity
+            android:name=".WelcomeScreen"
+            android:theme="@style/AppTheme.NoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".User.Login"/>
-
+        <activity android:name=".User.Login" />
         <activity android:name=".MainActivity" />
-
         <activity android:name=".StudyRoom.StudyRoomActivity" />
-
         <activity android:name=".Quiz.QuizActivity" />
-
         <activity android:name=".Discussion.DiscussionActivity" />
-
         <activity android:name=".Quiz.AddQuizActivity" />
-
         <activity android:name=".StudyRoom.AddStudyRoomActivity" />
-
         <activity android:name=".User.EditProfileActivity" />
-
         <activity android:name=".Discussion.AddDiscussion" />
-
         <activity
             android:name=".Discussion.AddCommentActivity"
             android:theme="@style/AppTheme.PopupTheme" />
-
         <activity android:name=".User.SignUp" />
-
-        <activity android:name=".User.ForgotPassword"></activity>
-
-
-
+        <activity android:name=".User.ForgotPassword" />
+        <activity android:name=".User.InviteFriends"></activity>
     </application>
 
 </manifest>

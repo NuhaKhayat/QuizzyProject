@@ -23,8 +23,8 @@ public class UserProfileFragment extends Fragment {
 
 	TextView username;
 	RatingBar rating ;
-	EditText fullname,email;
-	Button editProfile, changePassword;
+	EditText email;
+	Button editProfile, changePassword, inviteBtn;
 	Database db;
 	broadcastResever brUsername;
 	@Override
@@ -35,10 +35,10 @@ public class UserProfileFragment extends Fragment {
 
         username=(TextView)view.findViewById(R.id.usrname);
 		rating = (RatingBar)view.findViewById(R.id.rating);
-		fullname=(EditText)view.findViewById(R.id.fullname);
 		email=(EditText)view.findViewById(R.id.email);
 		editProfile =(Button)view.findViewById(R.id.editProfile);
-		changePassword = (Button)view.findViewById(R.id.changepass);
+		changePassword = (Button)view.findViewById(R.id.changePass);
+		inviteBtn = (Button)view.findViewById(R.id.inviteBtn);
 
 		//rating
 		int stars = (db.numOfLikes(1)/5);
@@ -49,26 +49,21 @@ public class UserProfileFragment extends Fragment {
 		username.setText(userId);
 
 
+		//move to invite friends activity
+		inviteBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(getActivity().getApplicationContext(),InviteFriends.class));
+			}
+		});
+
 		changePassword.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(getActivity().getApplicationContext(),EditProfileActivity.class));
 			}
 		});
-		editProfile.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (!fullname.getText().toString().isEmpty() && !email.getText().toString().isEmpty()) {
-					db.updateProfile(username.getText().toString(), fullname.getText().toString(), email.getText().toString());
-					db.close();
-					Toast.makeText(getActivity().getApplicationContext(), "Done", Toast.LENGTH_LONG).show();
-					startActivity(new Intent(getActivity().getApplicationContext(),MainActivity.class));
-				} else {
-					Toast.makeText(getActivity().getApplicationContext(), "Filed cannot be empty!", Toast.LENGTH_LONG).show();
-				}
-			}
 
-		});
 		return view ;
 	}
 }

@@ -3,6 +3,7 @@ package com.example.nuhakhayat.quizzy.User;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -17,10 +18,13 @@ import android.widget.Toast;
 import com.example.nuhakhayat.quizzy.Database;
 import com.example.nuhakhayat.quizzy.R;
 
+import java.util.Properties;
 import java.util.Random;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -28,7 +32,7 @@ import javax.mail.internet.MimeMessage;
 
 public class ForgotPassword extends AppCompatActivity {
 
-    String username, email, RandomCode;
+    String username, email;
     EditText usernameET;
     Button resetBtn;
     Database db;
@@ -37,6 +41,7 @@ public class ForgotPassword extends AppCompatActivity {
     ProgressDialog pdialog = null;
     Context context = null;
     String rec, subject, textMessage;
+    public static String correctCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +69,13 @@ public class ForgotPassword extends AppCompatActivity {
                         email = cursor.getString(0);
                         cursor.close();
 
-                        RandomCode = generateRandomCode();
+                        correctCode = generateRandomCode();
                         showCodeDialog();
                         //send email
-                        /*rec = email;
+                        rec = email;
                         subject = "Quizzy Reset Password";
                         textMessage = "Hi "+username+"!, \n This email was sent to you based on your request. \n" +
-                                "Password reset code is: "+RandomCode+", please enter this code in the dialog provided in the Quizzy app.\n" +
+                                "Password reset code is: "+correctCode+", please enter this code in the dialog provided in the Quizzy app.\n" +
                                 "Thnaks!\nQuizzy Team \n\n IF YOU DID NOT REQUEST THIS TYPE OF EMAIL PLEASE IGNORE THIS EMAIL!!";
 
                         Properties props = new Properties();
@@ -89,7 +94,7 @@ public class ForgotPassword extends AppCompatActivity {
                         pdialog = ProgressDialog.show(context, "", "Sending Mail...", true);
 
                         RetreiveFeedTask task = new RetreiveFeedTask();
-                        task.execute();*/
+                        task.execute();
                     }else {
                         Toast.makeText(ForgotPassword.this, "Username doesn't exist.", Toast.LENGTH_LONG).show();
                     }
@@ -125,6 +130,7 @@ public class ForgotPassword extends AppCompatActivity {
         }
     }
 
+    //generate random code consisting of 7 digits to verify the user identity
     private String generateRandomCode() {
         Random rand = new Random();
         Character letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
@@ -160,7 +166,19 @@ public class ForgotPassword extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 m_Text = input.getText().toString();
-                Toast.makeText(getApplicationContext(), m_Text , Toast.LENGTH_LONG).show();
+                if(m_Text.equals(correctCode)) {
+
+                    Intent br = new Intent ();
+                    br.setAction("com.example.nuhakhayat.quizzy");
+                    br.putExtra("username", username);
+                    sendBroadcast(br);
+
+                    Intent intent = new Intent(ForgotPassword.this, EditProfileActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Incorrect Code." , Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });

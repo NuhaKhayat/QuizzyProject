@@ -27,11 +27,12 @@ public class EditProfileActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_edit_profile);
 
 		db = new Database(getApplicationContext());
-		change = (Button) findViewById(R.id.changePass);
+		change = (Button) findViewById(R.id.changepass);
 		edittxt1 = (EditText) findViewById(R.id.editPass);
 		edittxt2 = (EditText) findViewById(R.id.conPass);
 
 		userId=brUsername.Username;
+
 
 
 
@@ -45,12 +46,14 @@ public class EditProfileActivity extends AppCompatActivity {
 					db.changePass(userId,edittxt1.getText().toString());
 					db.close();
 					Toast.makeText(getApplicationContext(), "The password is changed successfully ", Toast.LENGTH_LONG).show();
+					Intent intent = new Intent (EditProfileActivity.this, Login.class);
+					startActivity(intent);
 				} else if  (!edittxt1.getText().toString().equals(edittxt2.getText().toString() )) {
 					Toast.makeText(getApplicationContext(), "Please make sure your password match !", Toast.LENGTH_LONG).show();
 				}
 				else
 				{
-					Toast.makeText(getApplicationContext(), "Filed cannot be empty !", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "Fileds cannot be empty !", Toast.LENGTH_LONG).show();
 				}
 
 			}
