@@ -3,6 +3,7 @@ package com.example.nuhakhayat.quizzy.User;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,14 +41,18 @@ public class UserProfileFragment extends Fragment {
 		changePassword = (Button)view.findViewById(R.id.changePass);
 		inviteBtn = (Button)view.findViewById(R.id.inviteBtn);
 
+		rating.setNumStars(5);
 		//rating
-		int stars = (db.numOfLikes(1)/5);
+		Cursor cursor = db.numOfLikes(brUsername.Username);
+		int stars = (cursor.getCount()/5);
 		rating.setRating(stars);
 
 		//username
-		String userId=brUsername.Username;
-		username.setText(userId);
+		username.setText(brUsername.Username);
 
+		Cursor cursor1 = db.getEmail(brUsername.Username);
+		cursor.moveToFirst();
+//		email.setText(cursor.getString(0));
 
 		//move to invite friends activity
 		inviteBtn.setOnClickListener(new View.OnClickListener() {

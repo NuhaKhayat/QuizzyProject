@@ -103,5 +103,8 @@ public class QuizActivity extends AppCompatActivity implements Communicator{
 
 	}
 
-
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
 }

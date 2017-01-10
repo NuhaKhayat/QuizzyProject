@@ -24,42 +24,50 @@ import java.util.List;
  */
 
 public class SubStudyRoomsAFragment extends Fragment {
+
     View view;
     Database db;
     broadcastResever UserName;
+	List<String> subRoomList;
+	ListView listView;
     public static String userID;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+							 @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_sub_study_rooms,container,false);
 
         // Initialize the layout elements
-        ListView listView = (ListView)view.findViewById(R.id.listViewall);
+        listView = (ListView)view.findViewById(R.id.listViewall);
 
         db = new Database(getActivity().getApplicationContext());
         userID = UserName.Username;
 
 
-        final List<String> subRoomList = db.getSubscribedRoom(userID);
-        //Log.d("The Rooms are:", subRoomList.get(1));
+        subRoomList = db.getSubscribedRoom(userID);
 
-        listView.setAdapter(new ArrayAdapter(view.getContext().getApplicationContext(),android.R.layout.simple_list_item_1, subRoomList));
+
+        listView.setAdapter(new ArrayAdapter(view.getContext(),
+				android.R.layout.simple_list_item_1, subRoomList));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(view.getContext().getApplicationContext(),StudyRoomActivity.class);
-                intent.putExtra("RoomID", subRoomList.get(position));
-                startActivity(intent);
-                //Log.d("RoomID",subRoomList.get(position));
-            }
-        });
-        ImageView imageView = (ImageView)view.findViewById(R.id.imageViewp);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(view.getContext(),AddStudyRoomActivity.class));
+				Intent intent = new Intent(getActivity().getApplicationContext(),
+						StudyRoomActivity.class);
+				intent.putExtra("RoomName",subRoomList.get(position));
+				startActivity(intent);
             }
         });
         return view;
     }
+
+
+	@Override
+	public void onResume() {
+		subRoomList = db.getSubscribedRoom(userID);
+		listView.setAdapter(new ArrayAdapter(view.getContext(),android.R.layout.simple_list_item_1,
+				subRoomList));
+		super.onResume();
+
+	}
 }

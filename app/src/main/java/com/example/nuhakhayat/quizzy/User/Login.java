@@ -1,6 +1,7 @@
 package com.example.nuhakhayat.quizzy.User;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,22 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+		SharedPreferences sharedPreferences =
+				getSharedPreferences("LoginPreferences",MODE_PRIVATE);
 
+		String test = sharedPreferences.getString("userName",null);
+
+		if (test != null){
+			username = test;
+			Intent intent = new Intent ();
+			intent.setAction("com.example.nuhakhayat.quizzy");
+			intent.putExtra("username", username);
+			sendBroadcast(intent);
+
+			Intent myintent = new Intent(Login.this,  MainActivity.class);
+			startActivity(myintent);
+			finish();
+		}
 
         db = new Database(getApplicationContext());
 
@@ -56,8 +72,13 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Fields shouldn't be empty.", Toast.LENGTH_LONG).show();
                 }else {
                     if(db.login(username, password)) {
-                        Toast.makeText(Login.this, "logged in.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Login.this, "logged in.", Toast.LENGTH_LONG).show();
                         //send username
+						SharedPreferences sharedPreferences =
+								getSharedPreferences("LoginPreferences",MODE_PRIVATE);
+						SharedPreferences.Editor editor = sharedPreferences.edit();
+						editor.putString("userName",username).commit();
+
                         Intent intent = new Intent ();
                         intent.setAction("com.example.nuhakhayat.quizzy");
                         intent.putExtra("username", username);
@@ -65,6 +86,7 @@ public class Login extends AppCompatActivity {
 
                         Intent myintent = new Intent(Login.this,  MainActivity.class);
                         startActivity(myintent);
+                        finish();
                     }else {
                         Toast.makeText(Login.this, "Username & Password doesn't match or exists .", Toast.LENGTH_LONG).show();
                     }

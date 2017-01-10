@@ -6,27 +6,17 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/Green">
+        android:background="@color/DarkGreen">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Subscribed Study Rooms"
             android:textStyle="bold"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:id="@+id/textView"
-            android:textColor="@color/Black"
+            android:textColor="@color/White"
             android:layout_margin="10dp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageViewp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/add"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="12dp"/>
 
     </RelativeLayout>
 

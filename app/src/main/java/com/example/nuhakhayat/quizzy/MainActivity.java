@@ -1,6 +1,7 @@
 package com.example.nuhakhayat.quizzy;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -45,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
 
-
-
 	public static ArrayList<NavDrawerItem> navDrawerItems;
 	public static NavDrawerListAdapter adapter;
 
@@ -55,15 +54,6 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setSlideMenu();
-
-		Button signup = (Button) findViewById(R.id.mybutton);
-		signup.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent intent = new Intent(MainActivity.this, Login.class);
-				startActivity(intent);
-			}
-		});
 
 		if (savedInstanceState == null) {
 			mDrawerLayout.openDrawer(mDrawerList);
@@ -168,7 +158,12 @@ public class MainActivity extends AppCompatActivity {
 					fragmentToDisplay = new SubStudyRoomsAFragment();
 					break;
 				case 3:
-					//Logout
+					SharedPreferences sharedPreferences =
+							getSharedPreferences("LoginPreferences",MODE_PRIVATE);
+					SharedPreferences.Editor editor = sharedPreferences.edit();
+					editor.remove("userName").commit();
+					startActivity(new Intent(MainActivity.this,Login.class));
+					finish();
 					break;
 				default:
 					break;

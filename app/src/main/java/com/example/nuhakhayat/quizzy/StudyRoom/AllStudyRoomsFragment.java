@@ -18,24 +18,28 @@ import com.example.nuhakhayat.quizzy.R;
 import java.util.List;
 
 public class AllStudyRoomsFragment extends Fragment {
+
 	View view;
-	Database db ;
+	Database db;
+	List<String> courseList;
+	ListView listView;
 
+	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		db=new Database(getActivity().getApplicationContext());
-
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.fragment_all_study_rooms,container,false);
-		ListView listView = (ListView)view.findViewById(R.id.listViewall);
+		listView = (ListView)view.findViewById(R.id.listViewall);
 
-
-		final List<String> courseList = db.getAllCourses();
+		db = new Database(getActivity().getApplicationContext());
+		courseList = db.getAllCourses();
 
 		listView.setAdapter(new ArrayAdapter(view.getContext(),android.R.layout.simple_list_item_1, courseList));
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				startActivity(new Intent(view.getContext(),StudyRoomActivity.class));
+				Intent intent = new Intent(getActivity().getApplicationContext(),StudyRoomActivity.class);
+				intent.putExtra("RoomName",courseList.get(position));
+				startActivity(intent);
 			}
 		});
 		ImageView imageView = (ImageView)view.findViewById(R.id.imageViewp);
@@ -48,6 +52,13 @@ public class AllStudyRoomsFragment extends Fragment {
 		return view;
 	}
 
+	@Override
+	public void onResume() {
+		courseList = db.getAllCourses();
+		listView.setAdapter(new ArrayAdapter(view.getContext(),android.R.layout.simple_list_item_1, courseList));
+		super.onResume();
+
+	}
 }
 
 

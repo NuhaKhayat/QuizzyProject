@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -56,10 +57,10 @@ public class AddStudyRoomActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				roomName = courseName.getText().toString();
-				//Log.d("Edit Text", roomName);
 
 				if (roomName.equals(null) || roomName.isEmpty()){
-					Toast.makeText(AddStudyRoomActivity.this, "Please enter the Course Name", Toast.LENGTH_LONG).show();
+					Toast.makeText(AddStudyRoomActivity.this, "Please enter the Course Name",
+							Toast.LENGTH_LONG).show();
 					return;
 				}else {
 					addRoom(roomName);
@@ -70,7 +71,6 @@ public class AddStudyRoomActivity extends AppCompatActivity {
 	}
 
 	public void addRoom(String roomName){
-		//roomName = courseName.getText().toString();
 		ArrayList<String> majors = new ArrayList<String>();
 
 		// check the checked CheckBoxes
@@ -97,14 +97,10 @@ public class AddStudyRoomActivity extends AppCompatActivity {
 
 		// Check if the Room already exist
 		boolean check = database.checkRoom(roomName);
-		//Log.d("Check Value:", "check = :"+ check);
 		if ( check == true){
 			// Insert the room in Room Table
 			long sucAdd = database.insertRoom(roomName);
-			//String RoomId = database.getLastAddedRoom();
-			//Log.d("majors size: ",majors.size()+"");
 			database.insertMajors(roomName, majors);
-			database.insertSubRoom(UserId, roomName);
 			if ( sucAdd != -1){
 				showToast("Room Added Successfully");
 			}else {
@@ -123,10 +119,7 @@ public class AddStudyRoomActivity extends AppCompatActivity {
 		public void run() {
 			try {
 				Thread.sleep(3500); // As I am using LENGTH_LONG in Toast
-				Intent intent = new Intent(AddStudyRoomActivity.this,StudyRoomActivity.class);
-				intent.putExtra("RoomID", roomName);
-				Log.d("the Intent:", roomName);
-				startActivity(intent);
+				finish();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -138,8 +131,8 @@ public class AddStudyRoomActivity extends AppCompatActivity {
 		View toastView = inflater.inflate(R.layout.toast_layout,
 				(ViewGroup) findViewById(R.id.toastLayout));
 
-		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-		//    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+		    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
 		TextView toastMsg = (TextView)toastView.findViewById(R.id.textViewToast);
 		toastMsg.setText(message);

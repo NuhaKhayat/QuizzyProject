@@ -5,45 +5,6 @@
     <string name="signin">SIGN IN</string>
     <string name="signup">SIGN UP</string>
 
-
-    <string-array name="ListOfQuizzes">
-        <item>Quiz #1\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLevel of difficulty</item>
-        <item>Quiz #2\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLevel of difficulty</item>
-        <item>Quiz #3\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLevel of difficulty</item>
-        <item>Quiz #4\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLevel of difficulty</item>
-        <item>Quiz #5\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLevel of difficulty</item>
-        <item>Quiz #6\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tLevel of difficulty</item>
-    </string-array>
-
-    <string-array name="ListOfFlashcards">
-        <item>Discussion #1\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t#Answers</item>
-        <item>Discussion #2\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t#Answers</item>
-        <item>Discussion #3\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t#Answers</item>
-        <item>Discussion #4\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t#Answers</item>
-        <item>Discussion #5\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t#Answers</item>
-        <item>Discussion #6\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t#Answers</item>
-    </string-array>
-
-    <string-array name="LevelOfDiv">
-        <item>Difficult</item>
-        <item>Moderate</item>
-        <item>Easy</item>
-    </string-array>
-
-    <string-array name="listOfRooms">
-        <item>Study Room #1</item>
-        <item>Study Room #2</item>
-        <item>Study Room #3</item>
-        <item>Study Room #4</item>
-        <item>Study Room #5</item>
-        <item>Study Room #6</item>
-        <item>Study Room #7</item>
-        <item>Study Room #8</item>
-        <item>Study Room #9</item>
-        <item>Study Room #10</item>
-        <item>Study Room #11</item>
-    </string-array>
-
     <!-- Nav Drawer List Item Icons -->
     <array name="nav_drawer_icons">
         <item>@drawable/profile_user</item>

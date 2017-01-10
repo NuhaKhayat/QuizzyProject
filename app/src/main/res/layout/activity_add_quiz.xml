@@ -29,14 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="next"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/MediumGreen"
+        android:layout_margin="10dp"
         android:id="@+id/addQuiz_next_button"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="previous"
-        android:id="@+id/addQuiz_previous_button"/>
-
-
 
 </LinearLayout>

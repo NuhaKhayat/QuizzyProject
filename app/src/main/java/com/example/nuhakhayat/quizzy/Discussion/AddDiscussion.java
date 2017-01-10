@@ -28,12 +28,14 @@ public class AddDiscussion extends AppCompatActivity {
 	EditText discussionTitle, discussionDescription;
 	Button addDiscussionbtn;
 	Database database;
+	String roomName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_discussion);
 
+		roomName = getIntent().getStringExtra("RoomName");
 		database = new Database(getApplicationContext());
 
 		discussionTitle = (EditText)findViewById(R.id.disTitleEditText);
@@ -54,8 +56,6 @@ public class AddDiscussion extends AppCompatActivity {
 		//Retrieve data entered by user
 		String title = discussionTitle.getText().toString();
 		String description = discussionDescription.getText().toString();
-		//Retrieve study room id from intent
-		String RoomID = getIntent().getStringExtra("RoomID");
 
 		//Check that discussion title is filled
 		if(title.isEmpty()){
@@ -70,7 +70,7 @@ public class AddDiscussion extends AppCompatActivity {
 					.show();
 		}else{
 			//Add to database and check the the addition has been preformed
-			long check = database.insertDisscussion(title,description,RoomID);
+			long check = database.insertDiscussion(title,description,roomName);
 			if(check != -1){
 				showToast("Discussion Added Successfully");
 			}else{
@@ -83,7 +83,7 @@ public class AddDiscussion extends AppCompatActivity {
 	@Override
 	public void onBackPressed() {
 		Intent intent = new Intent(AddDiscussion.this, StudyRoomActivity.class);
-		intent.putExtra("RoomID",getIntent().getStringExtra("RoomID"));
+		intent.putExtra("RoomName",roomName);
 		startActivity(intent);
 	}
 
@@ -118,7 +118,9 @@ public class AddDiscussion extends AppCompatActivity {
 			try {
 				//Sleep thread for taost LENGHT_LONG
 				Thread.sleep(3500);
-				startActivity(new Intent(AddDiscussion.this,StudyRoomActivity.class));
+				Intent intent = new Intent(AddDiscussion.this,StudyRoomActivity.class);
+				intent.putExtra("RoomName",roomName);
+				startActivity(intent);
 				finish();
 			} catch (Exception e) {
 				e.printStackTrace();

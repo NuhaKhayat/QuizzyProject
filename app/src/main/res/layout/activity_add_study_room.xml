@@ -7,16 +7,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Green"
+        android:background="@color/DarkGreen"
         android:id="@+id/relativeLayout">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Study Room"
             android:textStyle="bold"
-            android:textSize="23dp"
+            android:textSize="20dp"
             android:id="@+id/textView"
-            android:textColor="@color/Black"
+            android:textColor="@color/White"
             android:layout_margin="10dp"
             android:textAlignment="center"
             android:layout_weight="1" />
@@ -35,6 +35,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
         android:textSize="18dp"
+        android:textStyle="bold"
         android:textColor="@color/Black"/>
     </LinearLayout>
 
@@ -42,7 +43,7 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:textColor="@color/Gray"
+        android:textColor="@color/Black"
         android:hint="Enter a Course Name"
         android:textAlignment="center"
         android:layout_marginLeft="50dp"
@@ -56,13 +57,14 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
         android:textSize="18dp"
+        android:textStyle="bold"
         android:textColor="@color/Black"/>
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Science"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/Black"
         android:layout_marginLeft="50dp"
         android:id="@+id/Ch1"/>
 
@@ -70,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Engineering"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/Black"
         android:layout_marginLeft="50dp"
         android:id="@+id/Ch2"/>
 
@@ -78,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Medical"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/Black"
         android:layout_marginLeft="50dp"
         android:id="@+id/Ch3"/>
 
@@ -86,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Computer"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/Black"
         android:layout_marginLeft="50dp"
         android:id="@+id/Ch4"/>
 
@@ -94,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Business"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/Black"
         android:layout_marginLeft="50dp"
         android:id="@+id/Ch5"/>
 
@@ -104,9 +106,6 @@
         android:text="Add Room"
         android:layout_marginTop="40dp"
         android:id="@+id/button7"
-        android:width="200dp"
-        android:background="@color/Blue"
+        android:background="@color/MediumGreen"
         android:layout_gravity="center_horizontal"/>
-
-
 </LinearLayout>

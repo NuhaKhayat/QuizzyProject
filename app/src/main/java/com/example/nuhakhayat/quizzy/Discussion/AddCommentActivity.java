@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.example.nuhakhayat.quizzy.Database;
 import com.example.nuhakhayat.quizzy.R;
+import com.example.nuhakhayat.quizzy.broadcastResever;
 
 
 /**
@@ -23,6 +24,7 @@ public class AddCommentActivity extends AppCompatActivity {
 	Button cancelBtn, addBtn;
 	EditText commentET;
 	Database database;
+	String userName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class AddCommentActivity extends AppCompatActivity {
 		this.setFinishOnTouchOutside(false);
 
 		database = new Database(getApplicationContext());
+		userName = broadcastResever.Username;
 
 		//Sets this activity to be a pop up
 		DisplayMetrics dm = new DisplayMetrics();
@@ -70,10 +73,8 @@ public class AddCommentActivity extends AppCompatActivity {
 				}
 
 				//Add comment to database and check that comment is added
-				Long check = database.insertcomment(UserComment,discussionTitle,"UserTest"); //add user name
+				Long check = database.insertComment(UserComment,discussionTitle,userName); //add user name
 				if(check != -1){
-					Toast.makeText(getApplicationContext(),"Comment Added Successfully",Toast.LENGTH_SHORT)
-							.show();
 					//Return to parent activity with result ok
 					Intent intent = new Intent();
 					setResult(RESULT_OK,intent);

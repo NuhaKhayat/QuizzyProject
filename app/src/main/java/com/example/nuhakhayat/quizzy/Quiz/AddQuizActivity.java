@@ -26,7 +26,7 @@ public class AddQuizActivity extends AppCompatActivity implements Communicator{
 	AddQuizFragment addQuizFragment;
 	Database database;
 	int clickNum;
-	String qtitle;
+	String qtitle, roomName;
 	String TAG = "AddQuizActivity";
 
 	@Override
@@ -35,6 +35,7 @@ public class AddQuizActivity extends AppCompatActivity implements Communicator{
 		setContentView(R.layout.activity_add_quiz);
 
 		database = new Database(getApplicationContext());
+		roomName = getIntent().getStringExtra("RoomName");
 
 		getFragmentManager().beginTransaction()
 				.add(R.id.fragmentContainer, new AddQuizFragment())
@@ -99,7 +100,7 @@ public class AddQuizActivity extends AppCompatActivity implements Communicator{
 	public void onQuizAdd(String title, int numOfq) {
 
 		//Add to database and check the the addition has been preformed
-		long check = database.insertQuiz(title, numOfq, "1"); //add room id
+		long check = database.insertQuiz(title, numOfq, roomName);
 		if(check != -1){
 			qtitle = title;
 		}else{
@@ -141,7 +142,9 @@ public class AddQuizActivity extends AppCompatActivity implements Communicator{
 			try {
 				//Sleep thread for taost LENGHT_LONG
 				Thread.sleep(3500);
-				startActivity(new Intent(AddQuizActivity.this,StudyRoomActivity.class));
+				Intent intent = new Intent(AddQuizActivity.this,StudyRoomActivity.class);
+				intent.putExtra("RoomName",roomName);
+				startActivity(intent);
 				finish();
 			} catch (Exception e) {
 				e.printStackTrace();
